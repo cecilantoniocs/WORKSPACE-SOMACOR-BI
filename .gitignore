@@ -1,0 +1,15 @@
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+*.log
+.DS_Store
+dist/
+build/
+.next/
+*.sqlite
+*.db
+.claude/settings.local.json
