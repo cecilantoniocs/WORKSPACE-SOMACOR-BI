@@ -16,7 +16,6 @@ build/
 
 # Archivos con datos personales (Ley 21.719)
 Lista Empleados de somacor.xlsx
-data_output.json
 
 # Carpetas de cache de desarrollo (no son codigo ni resultados)
 somacor-app/
