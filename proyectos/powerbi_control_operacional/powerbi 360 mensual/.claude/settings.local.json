@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; cd \"C:\\\\Users\\\\Usuario\\\\Desktop\\\\powerbi\"; Get-ChildItem -Name; echo \"---\"; Get-ChildItem \"plantilla 1\" -Name)"
+    ]
+  }
+}
