@@ -21,8 +21,10 @@
 #  rebase, asi que el historial queda limpio.
 # ============================================================================
 
-# Carpeta donde vive el repo en la maquina de Michell.
-$RepoPath = "C:\workspace-somacor-bi"
+# La carpeta del repo es la MISMA donde vive este script, se llame como se llame.
+# $PSScriptRoot = carpeta del propio archivo .ps1. Asi no importa si el repo esta
+# en C:\workspace-somacor-bi, en C:\workspace-somacor o donde sea: siempre apunta bien.
+$RepoPath = $PSScriptRoot
 $LogFile  = Join-Path $RepoPath "auto-sync.log"
 
 # --- Funcion para escribir en el log con fecha y hora ----------------------
