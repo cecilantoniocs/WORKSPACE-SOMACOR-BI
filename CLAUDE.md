@@ -22,7 +22,7 @@ proyectos/<nombre_del_proyecto>/
 ├── datos/        <- archivos de entrada: Excel, CSV, insumos que llegan
 ├── scripts/      <- el código: .py, .ps1, etc.
 ├── salidas/      <- resultados generados: reportes, Excel finales, etc.
-└── changelog/    <- registro de cambios, un archivo por fecha (ver punto 3)
+└── changelog/    <- contiene UN solo CHANGELOG.md con todos los cambios por fecha (ver punto 3)
 ```
 
 Reglas:
@@ -69,28 +69,36 @@ Cosas por resolver, dudas, decisiones importantes.
 > ✅ Recién **después** de crear la carpeta y este `PLAN.md` puedes empezar a programar
 > lo que se pidió. Si el usuario no te dio el nombre del proyecto, pregúntaselo antes.
 
-### 3. Registrar los cambios en `changelog/`
+### 3. Registrar los cambios en `changelog/CHANGELOG.md`
 
-Cada vez que hagas un avance con sentido en un proyecto (crear algo, arreglar un error,
-cambiar lógica, generar un resultado), déjalo anotado en la carpeta `changelog/` del
-proyecto, en un archivo **con la fecha de hoy** como nombre:
+Cada proyecto lleva **un solo archivo** de cambios: `changelog/CHANGELOG.md`. NO crees un
+archivo por fecha; todas las fechas van **dentro del mismo archivo**, cada una en su
+sección.
 
 ```
-proyectos/<nombre_del_proyecto>/changelog/AAAA-MM-DD.md
+proyectos/<nombre_del_proyecto>/changelog/CHANGELOG.md
 ```
 
-Ejemplo: `changelog/2026-06-18.md`.
+Cada vez que hagas un avance con sentido (crear algo, arreglar un error, cambiar lógica,
+generar un resultado), anótalo en ese archivo:
 
 - Usa **la fecha real de hoy** (formato `AAAA-MM-DD`, ej. `2026-06-18`). Si no estás
-  seguro de la fecha, averíguala antes de escribir el archivo.
-- Si ya existe el archivo de hoy, **agrega** una línea nueva al final (no lo reemplaces).
+  seguro de la fecha, averíguala antes de escribir.
+- Si **ya existe** la sección de la fecha de hoy, **agrega** una línea más debajo de ella
+  (no la dupliques).
+- Si es una **fecha nueva**, crea su sección **arriba de todo** (la fecha más reciente
+  queda primera, así lo último se ve al tiro).
 - Cada línea: qué se hizo, en simple. Si aplica, por qué.
 
-Formato del archivo:
+Así se ve el archivo `CHANGELOG.md` (un único archivo que va creciendo hacia arriba):
 
 ```markdown
-# Changelog — <nombre del proyecto> — 2026-06-18
+# Changelog — <nombre del proyecto>
 
+## 2026-06-19
+- Agregué el filtro por centro de costo al reporte.
+
+## 2026-06-18
 - Creé el script que lee el Excel de asistencia y arma el consolidado.
 - Arreglé el error que dejaba filas en blanco al final.
 - Generé el primer reporte de prueba en salidas/.
@@ -109,13 +117,15 @@ workspace-somacor-bi/
 │   │   ├── datos/             <- insumos (Excel, CSV)
 │   │   ├── scripts/           <- código (.py, .ps1)
 │   │   ├── salidas/           <- resultados generados
-│   │   └── changelog/         <- 2026-06-18.md, 2026-06-19.md, ...
+│   │   └── changelog/
+│   │       └── CHANGELOG.md   <- un solo archivo con todos los cambios por fecha
 │   └── reporte_mensual/
 │       ├── PLAN.md
 │       ├── datos/
 │       ├── scripts/
 │       ├── salidas/
 │       └── changelog/
+│           └── CHANGELOG.md
 ├── auto-sync.ps1
 └── ...
 ```
@@ -159,7 +169,7 @@ Ejemplos: `control_asistencia/`, `reporte_mensual.py`, `datos_junio.csv`.
 ## 5. Qué hacer al terminar un avance
 
 - Deja el **`PLAN.md`** del proyecto **actualizado**, sobre todo la sección **Estado**.
-- Anota lo que hiciste en el **`changelog/`** del proyecto, en el archivo de la fecha de
+- Anota lo que hiciste en el **`changelog/CHANGELOG.md`** del proyecto, bajo la fecha de
   hoy (ver punto 3 de la regla obligatoria).
 - Cuando algo ya sirva y esté listo para que Cecil lo revise, déjalo marcado claramente
   en el `PLAN.md` como **"LISTO PARA REVISAR"**, así él sabe qué mirar.
