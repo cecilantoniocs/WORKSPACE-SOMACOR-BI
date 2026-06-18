@@ -10,16 +10,29 @@ a producción. Cuando trabajes en esta carpeta, sigue SIEMPRE las reglas de abaj
 Cuando el usuario te pida empezar **un proyecto nuevo** (algo que todavía no existe en
 esta carpeta), ANTES de escribir cualquier código tienes que hacer estos dos pasos:
 
-### 1. Crear la carpeta del proyecto
+### 1. Crear la carpeta del proyecto con su estructura interna
 
-Todo proyecto nuevo vive en su **propia carpeta** dentro de `proyectos/`:
+Todo proyecto nuevo vive en su **propia carpeta** dentro de `proyectos/`, y SIEMPRE con
+esta estructura interna fija:
 
 ```
 proyectos/<nombre_del_proyecto>/
+├── PLAN.md       <- documentación del proyecto (ver punto 2)
+├── datos/        <- archivos de entrada: Excel, CSV, insumos que llegan
+├── scripts/      <- el código: .py, .ps1, etc.
+└── salidas/      <- resultados generados: reportes, Excel finales, etc.
 ```
 
-- TODO lo del proyecto (código, datos, scripts, subcarpetas) va **dentro** de esa carpeta.
-  No dejes archivos del proyecto sueltos en la raíz del repo.
+Reglas:
+- TODO lo del proyecto va **dentro** de su carpeta. No dejes archivos sueltos en la raíz
+  del repo ni en `proyectos/` directamente.
+- Crea SIEMPRE las tres subcarpetas (`datos/`, `scripts/`, `salidas/`) aunque alguna
+  empiece vacía. Si una carpeta va a quedar vacía al inicio, déjale adentro un archivo
+  `.gitkeep` para que git la conserve.
+- Cada archivo va donde corresponde: insumos en `datos/`, código en `scripts/`, lo que
+  el código produce en `salidas/`.
+- Si el proyecto necesita una carpeta extra (ej. `docs/`), agrégala, pero las tres de
+  arriba van siempre.
 
 ### 2. Crear el `PLAN.md` del proyecto
 
@@ -61,10 +74,14 @@ workspace-somacor-bi/
 ├── proyectos/
 │   ├── control_asistencia/
 │   │   ├── PLAN.md            <- documentación del proyecto
-│   │   └── ...                <- todo el código y archivos acá adentro
+│   │   ├── datos/             <- insumos (Excel, CSV)
+│   │   ├── scripts/           <- código (.py, .ps1)
+│   │   └── salidas/           <- resultados generados
 │   └── reporte_mensual/
 │       ├── PLAN.md
-│       └── ...
+│       ├── datos/
+│       ├── scripts/
+│       └── salidas/
 ├── auto-sync.ps1
 └── ...
 ```
