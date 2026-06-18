@@ -8,7 +8,8 @@ a producción. Cuando trabajes en esta carpeta, sigue SIEMPRE las reglas de abaj
 ## 🚨 REGLA OBLIGATORIA: antes de empezar CUALQUIER proyecto nuevo
 
 Cuando el usuario te pida empezar **un proyecto nuevo** (algo que todavía no existe en
-esta carpeta), ANTES de escribir cualquier código tienes que hacer estos dos pasos:
+esta carpeta), ANTES de escribir cualquier código tienes que hacer los pasos 1 y 2. El
+paso 3 (changelog) se hace a medida que vas trabajando.
 
 ### 1. Crear la carpeta del proyecto con su estructura interna
 
@@ -20,18 +21,19 @@ proyectos/<nombre_del_proyecto>/
 ├── PLAN.md       <- documentación del proyecto (ver punto 2)
 ├── datos/        <- archivos de entrada: Excel, CSV, insumos que llegan
 ├── scripts/      <- el código: .py, .ps1, etc.
-└── salidas/      <- resultados generados: reportes, Excel finales, etc.
+├── salidas/      <- resultados generados: reportes, Excel finales, etc.
+└── changelog/    <- registro de cambios, un archivo por fecha (ver punto 3)
 ```
 
 Reglas:
 - TODO lo del proyecto va **dentro** de su carpeta. No dejes archivos sueltos en la raíz
   del repo ni en `proyectos/` directamente.
-- Crea SIEMPRE las tres subcarpetas (`datos/`, `scripts/`, `salidas/`) aunque alguna
-  empiece vacía. Si una carpeta va a quedar vacía al inicio, déjale adentro un archivo
-  `.gitkeep` para que git la conserve.
+- Crea SIEMPRE las cuatro subcarpetas (`datos/`, `scripts/`, `salidas/`, `changelog/`)
+  aunque alguna empiece vacía. Si una carpeta va a quedar vacía al inicio, déjale adentro
+  un archivo `.gitkeep` para que git la conserve.
 - Cada archivo va donde corresponde: insumos en `datos/`, código en `scripts/`, lo que
   el código produce en `salidas/`.
-- Si el proyecto necesita una carpeta extra (ej. `docs/`), agrégala, pero las tres de
+- Si el proyecto necesita una carpeta extra (ej. `docs/`), agrégala, pero las cuatro de
   arriba van siempre.
 
 ### 2. Crear el `PLAN.md` del proyecto
@@ -67,6 +69,36 @@ Cosas por resolver, dudas, decisiones importantes.
 > ✅ Recién **después** de crear la carpeta y este `PLAN.md` puedes empezar a programar
 > lo que se pidió. Si el usuario no te dio el nombre del proyecto, pregúntaselo antes.
 
+### 3. Registrar los cambios en `changelog/`
+
+Cada vez que hagas un avance con sentido en un proyecto (crear algo, arreglar un error,
+cambiar lógica, generar un resultado), déjalo anotado en la carpeta `changelog/` del
+proyecto, en un archivo **con la fecha de hoy** como nombre:
+
+```
+proyectos/<nombre_del_proyecto>/changelog/AAAA-MM-DD.md
+```
+
+Ejemplo: `changelog/2026-06-18.md`.
+
+- Usa **la fecha real de hoy** (formato `AAAA-MM-DD`, ej. `2026-06-18`). Si no estás
+  seguro de la fecha, averíguala antes de escribir el archivo.
+- Si ya existe el archivo de hoy, **agrega** una línea nueva al final (no lo reemplaces).
+- Cada línea: qué se hizo, en simple. Si aplica, por qué.
+
+Formato del archivo:
+
+```markdown
+# Changelog — <nombre del proyecto> — 2026-06-18
+
+- Creé el script que lee el Excel de asistencia y arma el consolidado.
+- Arreglé el error que dejaba filas en blanco al final.
+- Generé el primer reporte de prueba en salidas/.
+```
+
+> Esto sirve para que Cecil pueda mirar rápido qué se avanzó cada día sin tener que
+> revisar todo el código.
+
 ### Ejemplo de cómo debe quedar
 
 ```
@@ -76,12 +108,14 @@ workspace-somacor-bi/
 │   │   ├── PLAN.md            <- documentación del proyecto
 │   │   ├── datos/             <- insumos (Excel, CSV)
 │   │   ├── scripts/           <- código (.py, .ps1)
-│   │   └── salidas/           <- resultados generados
+│   │   ├── salidas/           <- resultados generados
+│   │   └── changelog/         <- 2026-06-18.md, 2026-06-19.md, ...
 │   └── reporte_mensual/
 │       ├── PLAN.md
 │       ├── datos/
 │       ├── scripts/
-│       └── salidas/
+│       ├── salidas/
+│       └── changelog/
 ├── auto-sync.ps1
 └── ...
 ```
@@ -125,6 +159,8 @@ Ejemplos: `control_asistencia/`, `reporte_mensual.py`, `datos_junio.csv`.
 ## 5. Qué hacer al terminar un avance
 
 - Deja el **`PLAN.md`** del proyecto **actualizado**, sobre todo la sección **Estado**.
+- Anota lo que hiciste en el **`changelog/`** del proyecto, en el archivo de la fecha de
+  hoy (ver punto 3 de la regla obligatoria).
 - Cuando algo ya sirva y esté listo para que Cecil lo revise, déjalo marcado claramente
   en el `PLAN.md` como **"LISTO PARA REVISAR"**, así él sabe qué mirar.
 
