@@ -13,3 +13,6 @@ build/
 *.sqlite
 *.db
 .claude/settings.local.json
+
+# Archivos con datos personales (Ley 21.719)
+Lista Empleados de somacor.xlsx
