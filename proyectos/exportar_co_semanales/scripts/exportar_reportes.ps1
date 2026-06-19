@@ -85,11 +85,17 @@ foreach ($reporte in $reportes) {
     $cuerpo      = '{"format":"' + $FORMATO + '"}'
 
     try {
-        $respuestaJson = Invoke-PowerBIRestMethod -Url $urlExportar -Method Post -Body $cuerpo
-        $respuesta     = $respuestaJson | ConvertFrom-Json
-        $exportId      = $respuesta.id
+        $respuesta = Invoke-PowerBIRestMethod -Url $urlExportar -Method Post -Body $cuerpo
+        if ($respuesta -is [string]) { $respuesta = $respuesta | ConvertFrom-Json }
+        $exportId  = $respuesta.id
     } catch {
         Write-Host "    ERROR al iniciar exportacion: $_" -ForegroundColor Red
+        $fallidos += $reporte.Name
+        continue
+    }
+
+    if ([string]::IsNullOrEmpty($exportId)) {
+        Write-Host "    ERROR: la API no devolvio un ID de exportacion. Saltando este reporte." -ForegroundColor Red
         $fallidos += $reporte.Name
         continue
     }
@@ -98,19 +104,26 @@ foreach ($reporte in $reportes) {
     $urlEstado    = "groups/$WORKSPACE_ID/reports/$($reporte.Id)/exports/$exportId"
     $tiempoEspera = 0
     $estado       = "Running"
+    $erroresConsecutivos = 0
 
     while ($estado -notin @("Succeeded", "Failed") -and $tiempoEspera -lt $TIEMPO_MAX_SEG) {
         Start-Sleep -Seconds $INTERVALO_SEG
         $tiempoEspera += $INTERVALO_SEG
 
         try {
-            $checkJson  = Invoke-PowerBIRestMethod -Url $urlEstado -Method Get
-            $check      = $checkJson | ConvertFrom-Json
+            $check = Invoke-PowerBIRestMethod -Url $urlEstado -Method Get
+            if ($check -is [string]) { $check = $check | ConvertFrom-Json }
             $estado     = $check.status
             $porcentaje = if ($check.percentComplete) { $check.percentComplete } else { "..." }
+            $erroresConsecutivos = 0
             Write-Host "    Estado: $estado ($porcentaje%) - $($tiempoEspera)s" -ForegroundColor Gray
         } catch {
+            $erroresConsecutivos++
             Write-Host "    Advertencia al consultar estado: $_" -ForegroundColor Yellow
+            if ($erroresConsecutivos -ge 3) {
+                Write-Host "    Demasiados errores consecutivos. Cancelando este reporte." -ForegroundColor Red
+                $estado = "Failed"
+            }
         }
     }
 
