@@ -24,7 +24,7 @@ CARPETA_SESION = BASE_DIR / "datos" / "sesion_browser"
 CARPETA_SALIDA = BASE_DIR / "salidas"
 
 ESPERA_CARGA   = 12    # segundos que espera a que cargue cada reporte
-TIMEOUT_LOGIN  = 180   # segundos maximos para que el usuario haga login
+TIMEOUT_LOGIN  = 300   # segundos maximos para que el usuario haga login
 TIMEOUT_PDF    = 120   # segundos maximos esperando que se genere el PDF
 
 
@@ -52,36 +52,55 @@ def click_primero_visible(page, selectores: list, espera_ms=3000) -> bool:
 
 def obtener_reportes(page) -> list:
     """Extrae IDs y nombres de los reportes desde la pagina del workspace."""
-    time.sleep(3)
 
-    # Scroll para cargar todos los items si la lista es larga
-    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-    time.sleep(2)
-    page.evaluate("window.scrollTo(0, 0)")
-    time.sleep(1)
+    # Esperar que la pagina termine de navegar/redirigir
+    try:
+        page.wait_for_load_state("networkidle", timeout=20000)
+    except Exception:
+        pass
+
+    time.sleep(5)
+
+    # Scroll para forzar la carga de todos los items
+    try:
+        page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(3)
+        page.evaluate("window.scrollTo(0, 0)")
+        time.sleep(2)
+    except Exception:
+        time.sleep(3)
 
     reportes = page.evaluate("""
         () => {
-            const links = document.querySelectorAll('a[href*="/reports/"]');
             const vistos = new Set();
             const lista  = [];
 
-            links.forEach(link => {
-                const match = link.href.match(/\\/reports\\/([a-f0-9\\-]{36})/);
-                if (!match || vistos.has(match[1])) return;
-                vistos.add(match[1]);
+            // Buscar en todos los elementos del DOM cualquier referencia a /reports/{uuid}
+            const todo_html = document.documentElement.innerHTML;
+            const regex = /groups\\/[a-f0-9\\-]{36}\\/reports\\/([a-f0-9\\-]{36})/g;
+            let coincidencia;
 
-                let nombre = (link.textContent || "")
-                    .replace(/\\s+/g, " ").trim();
+            while ((coincidencia = regex.exec(todo_html)) !== null) {
+                const id = coincidencia[1];
+                if (vistos.has(id)) continue;
+                vistos.add(id);
 
-                if (!nombre) {
-                    nombre = link.getAttribute("aria-label") ||
-                             link.getAttribute("title") ||
-                             "Reporte_" + match[1].substring(0, 8);
+                // Buscar un elemento cercano que tenga el nombre del reporte
+                const enlace = document.querySelector(
+                    'a[href*="/reports/' + id + '"]'
+                );
+
+                let nombre = "";
+                if (enlace) {
+                    nombre = (enlace.textContent || "").replace(/\\s+/g, " ").trim();
+                    if (!nombre) nombre = enlace.getAttribute("aria-label") || "";
+                    if (!nombre) nombre = enlace.getAttribute("title") || "";
                 }
 
-                lista.push({ id: match[1], nombre: nombre });
-            });
+                if (!nombre) nombre = "Reporte_" + id.substring(0, 8);
+
+                lista.push({ id: id, nombre: nombre });
+            }
 
             return lista;
         }
@@ -114,69 +133,61 @@ def exportar_reporte(page, reporte_id: str, reporte_nombre: str,
     print(f"    Cargando reporte ({ESPERA_CARGA}s)...")
     time.sleep(ESPERA_CARGA)
 
-    # Paso 1: Abrir menu File / Archivo
-    abierto = click_primero_visible(page, [
-        'button[aria-label="File"]',
-        'button[aria-label="Archivo"]',
-        'button:has-text("File")',
-        'button:has-text("Archivo")',
-        '[role="menuitem"]:has-text("File")',
-        '[role="menuitem"]:has-text("Archivo")',
-    ])
+    try:
+        page.wait_for_load_state("networkidle", timeout=20000)
+    except Exception:
+        pass
 
-    if not abierto:
-        return False, (
-            "No se encontro el menu File/Archivo. "
-            "Es posible que el reporte no haya cargado bien o cambio la interfaz de PowerBI."
-        )
+    time.sleep(3)
 
-    time.sleep(1)
-
-    # Paso 2: Click en Export / Exportar
-    click_primero_visible(page, [
-        '[role="menuitem"]:has-text("Export")',
-        '[role="menuitem"]:has-text("Exportar")',
-        'li:has-text("Export")',
-        'li:has-text("Exportar")',
-        'button:has-text("Export")',
+    # Paso 1: Click en "Exportar" de la barra superior
+    print("    Paso 1/3: Haciendo click en 'Exportar' de la barra...")
+    exportar_barra = click_primero_visible(page, [
+        'button[aria-label="Exportar"]',
+        'button[title="Exportar"]',
         'button:has-text("Exportar")',
+        '[role="button"]:has-text("Exportar")',
     ])
 
-    time.sleep(1)
+    if not exportar_barra:
+        return False, "No se encontro el boton 'Exportar' en la barra del reporte."
 
-    # Paso 3 y 4: Click en PDF y capturar la descarga.
-    # La descarga puede dispararse al hacer click en "PDF" (directamente)
-    # o al hacer click en el boton "Export" de un dialogo de confirmacion.
-    # expect_download captura la descarga sin importar cual de los dos la dispara.
+    time.sleep(2)
+
+    # Paso 2: Click en "PDF" del menu desplegable
+    print("    Paso 2/3: Seleccionando PDF...")
+    pdf_ok = click_primero_visible(page, [
+        '[role="menuitem"]:has-text("PDF")',
+        'li:has-text("PDF")',
+        'button:has-text("PDF")',
+        'span:has-text("PDF")',
+        'a:has-text("PDF")',
+    ])
+
+    if not pdf_ok:
+        return False, "No se encontro la opcion PDF en el menu desplegable."
+
+    time.sleep(3)
+
+    # Paso 3: En el dialogo que aparece, click en el boton verde "Exportar"
+    # y capturar la descarga automaticamente (sin cuadro de Guardar como)
+    print("    Paso 3/3: Confirmando exportacion y esperando descarga...")
     try:
         with page.expect_download(timeout=TIMEOUT_PDF * 1000) as descarga_info:
-
-            # Click en la opcion PDF del menu
             click_primero_visible(page, [
-                '[role="menuitem"]:has-text("PDF")',
-                'li:has-text("PDF")',
-                'button:has-text("PDF")',
-                '[role="menuitem"]:has-text("Export to PDF")',
-                '[role="menuitem"]:has-text("Exportar a PDF")',
-            ])
-
-            time.sleep(3)
-
-            # Si aparecio un dialogo de confirmacion, hacer click en Export
-            click_primero_visible(page, [
-                'div[role="dialog"] button:has-text("Export")',
-                'div[role="dialog"] button:has-text("Exportar")',
-                '.export-dialog button:has-text("Export")',
-                'button.primary-button:has-text("Export")',
-                'button.primary-button:has-text("Exportar")',
-            ], espera_ms=8000)
+                '[role="dialog"] button:has-text("Exportar")',
+                'div[class*="dialog"] button:has-text("Exportar")',
+                'div[class*="modal"] button:has-text("Exportar")',
+                'button[class*="primary"]:has-text("Exportar")',
+            ], espera_ms=10000)
+            print("    Boton Exportar clickeado. Generando PDF...")
 
         descarga = descarga_info.value
         descarga.save_as(str(ruta_archivo))
         return True, nombre_archivo
 
     except Exception as e:
-        return False, f"No se pudo capturar la descarga del PDF: {e}"
+        return False, f"Error al esperar la descarga: {e}"
 
 
 # ─── MAIN ─────────────────────────────────────────────────────────────────────
@@ -210,7 +221,7 @@ def main():
         print("Paso 1: Abriendo workspace de PowerBI en el navegador...")
         print()
         print("  >> Si el navegador pide login, ingresa tu usuario y contrasena")
-        print("     de Microsoft. Tienes 3 minutos.")
+        print("     de Microsoft. Tienes 5 minutos.")
         print("  >> Si ya tienes sesion guardada, el script continua solo.")
         print()
 
@@ -220,10 +231,12 @@ def main():
         print("  Esperando que el workspace cargue...")
         try:
             page.wait_for_url(f"**/{WORKSPACE_ID}/**", timeout=TIMEOUT_LOGIN * 1000)
-            time.sleep(4)
+            # Esperar que PowerBI termine de cargar completamente tras el login
+            print("  Login detectado. Esperando que PowerBI cargue (2 minutos)...")
+            time.sleep(120)
         except Exception:
             print()
-            print("ERROR: El workspace no cargo en 3 minutos.")
+            print("ERROR: El workspace no cargo en 5 minutos.")
             print("       Verifica tu conexion o intenta de nuevo.")
             context.close()
             sys.exit(1)
@@ -234,10 +247,14 @@ def main():
         reportes = obtener_reportes(page)
 
         if not reportes:
+            # Guardar screenshot para diagnostico
+            ruta_debug = CARPETA_SALIDA / "debug_workspace.png"
+            page.screenshot(path=str(ruta_debug))
             print()
             print("ERROR: No se encontraron reportes.")
-            print("       Asegurate de que el workspace este visible en el navegador")
-            print("       y que tengas acceso a los reportes.")
+            print("       Se guardo una captura de pantalla para diagnostico:")
+            print(f"       {ruta_debug}")
+            print("       Comparte esa imagen para revisar que estaba viendo el script.")
             context.close()
             sys.exit(1)
 

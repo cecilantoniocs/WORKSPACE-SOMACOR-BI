@@ -1,0 +1,416 @@
+[
+  {
+    "rut": "18594613-4",
+    "nombre": "Adolfo Ignacio Hernandez Guajardo",
+    "cargo": "Supervisor de Seguridad",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "18188642-0",
+    "nombre": "Alex Andres Carrillo Rapiman",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "24681830-4",
+    "nombre": "Ana Yesenis Arcos Lasso",
+    "cargo": "SUPERVISOR",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "15692255-2",
+    "nombre": "Andy Andres Sepulveda Villalobos",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "17057524-5",
+    "nombre": "Boris Andres Valdebenito Lorca",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "19701834-8",
+    "nombre": "Camila Andrea Aguirre Oyarzo",
+    "cargo": "Supervisor de Acreditación",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "15021951-5",
+    "nombre": "Carlos Allen Leonardo Salas Rivera",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "18659640-4",
+    "nombre": "Carlos Andres Olivares Olivares",
+    "cargo": "Supervisor Instr De Brigada",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "17364428-0",
+    "nombre": "Carolina Andrea Robles Castillo",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "10668193-7",
+    "nombre": "Christian Alejandro Maldonado Tapia",
+    "cargo": "Administrador de contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "11615752-7",
+    "nombre": "Cristian Osvaldo Gutierrez Rivera",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "12969985-K",
+    "nombre": "Cristian Raul Quiroz Flores",
+    "cargo": "Administrador de Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "15024567-2",
+    "nombre": "Daniel Aurelio Araya Aguilera",
+    "cargo": "Supervisor de Seguridad",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "16821503-7",
+    "nombre": "Diego Alberto Arevalo Arevalo",
+    "cargo": "Supervisor Instr De Brigada",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "18009621-3",
+    "nombre": "Eric Alejandro Polanco Castillo",
+    "cargo": "Administrador de contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "16991966-6",
+    "nombre": "Fernando Alejandro Salas Silva",
+    "cargo": "Administrador de Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "20600808-3",
+    "nombre": "Francisco Antonio Codoceo Aguirre",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "9409955-2",
+    "nombre": "Gonzalo Eduardo Romero Arancibia",
+    "cargo": "Administrador de Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "8215207-5",
+    "nombre": "Hector Luis Figueroa Zamora",
+    "cargo": "Administrador de Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "12136982-6",
+    "nombre": "Héctor Rodrigo Rocco Montero",
+    "cargo": "Administrador De Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "24463365-K",
+    "nombre": "Helen Aireyu Torrico",
+    "cargo": "Supervisor seguridad privada",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "17738560-3",
+    "nombre": "Ignacio Andres Arce Castillo",
+    "cargo": "Supervisor Administrativo",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "13009832-0",
+    "nombre": "Ingrid Marcela Aguirre Lazo",
+    "cargo": "SUPERVISORA DE LAVANDERIA",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "12200872-K",
+    "nombre": "Ivan Rodrigo Peñailillo Carrillo",
+    "cargo": "Administrador de Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "13528871-3",
+    "nombre": "Jaime Antonio Bravo Castillo",
+    "cargo": "Administrador De Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "15188371-0",
+    "nombre": "Jaime Cesar Betancur Leon",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "15828271-2",
+    "nombre": "Jesus Antonio Moraga Antigual",
+    "cargo": "Administrador de Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "16394890-7",
+    "nombre": "Jonnathan Andres Vargas Sanhueza",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "15333993-7",
+    "nombre": "Jorge Alfredo Claveria Ibañez",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "17020284-8",
+    "nombre": "Jorge Andres Espejo Rivera",
+    "cargo": "Supervisor de Seguridad",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "11512241-K",
+    "nombre": "Jorge Gustavo Adaros Diaz",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "15691738-9",
+    "nombre": "Jose Octavio Carvajal Castro",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "12938924-9",
+    "nombre": "Juan Alejandro Diaz Gutierrez",
+    "cargo": "Supervisor instructor brigada",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "15264093-5",
+    "nombre": "Juan Carlos Sanhueza Rivas",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "10139729-7",
+    "nombre": "Juan Humberto Alvarado Llanos",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "13178094-K",
+    "nombre": "Juana Ximena Yañez Rojas",
+    "cargo": "SUPERVISORA GESTION DE SEGURIDAD",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "16827592-7",
+    "nombre": "Manuel Francisco Salgado Ruiz",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "13423374-5",
+    "nombre": "Marcelo Alejandro Iriarte Rojas",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "11612565-K",
+    "nombre": "Marcelo Mauricio Morales Ceballos",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "9348394-4",
+    "nombre": "Marco Antonio González Funes",
+    "cargo": "Administrador de contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "26441345-1",
+    "nombre": "Marcos Daniel Sequera Romero",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "27193044-5",
+    "nombre": "Marielbi Carolina Alvarez Rodriguez",
+    "cargo": "Administrador De Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "16704251-1",
+    "nombre": "Mario Adrian Albornoz Ortiz",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "16676846-2",
+    "nombre": "Mario Andres Ramirez Saez",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "19142002-0",
+    "nombre": "Matias Gabriel Piña Naranjo",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "18291179-8",
+    "nombre": "Mauricio Felipe Pasmiño Mora",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "12868394-1",
+    "nombre": "Miguel Angel Cantarero Toro",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "11720696-3",
+    "nombre": "Nelson Antonio Cepeda Rivera",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "19691630-K",
+    "nombre": "Nolberto Manuel Salinas Olivera",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "18075981-6",
+    "nombre": "Oscar José Montecino Sandoval",
+    "cargo": "Supervisor de Seguridad",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "13011115-7",
+    "nombre": "Pedro Anibal Ortiz Barrios",
+    "cargo": "Supervisor de Seguridad",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "6481922-4",
+    "nombre": "Rafael Antonio Rosales Becerra",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "12209635-1",
+    "nombre": "Rene Adrian Guerrero Cuentas",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "15170000-4",
+    "nombre": "Ricardo David Miranda Palma",
+    "cargo": "Supervisor de Seguridad",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "14114010-8",
+    "nombre": "Robert Cristhian Campos Godoy",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "16599099-4",
+    "nombre": "Roberto Alejandro Vasquez Delgado",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "15573712-3",
+    "nombre": "Roberto Andres Rojo Muñoz",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "16689242-2",
+    "nombre": "Rodolfo Mauricio Vicencio Villalobos",
+    "cargo": "SUPERVISOR",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "18317816-4",
+    "nombre": "Rodrigo Ignacio Alarcon Cespedes",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "19129782-2",
+    "nombre": "Salomon Andres Pacheco Gonzalez",
+    "cargo": "Supervisor Instr De Brigada",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "16109595-8",
+    "nombre": "Salvador Emilio Rios Vega",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "19341513-K",
+    "nombre": "Sara Fernanda Valenzuela Benavides",
+    "cargo": "SUPERVISORA",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "17155250-8",
+    "nombre": "Sebastian Alberto Rosales Rosales",
+    "cargo": "Administrador de Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "18583574-K",
+    "nombre": "Sergio Gabriel Rojas Mazuela",
+    "cargo": "Administrador de Contrato",
+    "tipo": "adc"
+  },
+  {
+    "rut": "14098144-3",
+    "nombre": "Victor Hugo Espejo Milla",
+    "cargo": "SUPERVISOR",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "14029465-9",
+    "nombre": "Victor Manuel Rifo Sanhueza",
+    "cargo": "Supervisor de Seguridad",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "9697865-0",
+    "nombre": "Waldo Javier Contreras Solar",
+    "cargo": "Supervisor seguridad privada",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "16732493-2",
+    "nombre": "Wilfredo Felipe Cortes Rodriguez",
+    "cargo": "Supervisor",
+    "tipo": "supervisor"
+  },
+  {
+    "rut": "11944868-9",
+    "nombre": "Woody Harry Klein Escobar",
+    "cargo": "Administrador de Contrato",
+    "tipo": "adc"
+  }
+]

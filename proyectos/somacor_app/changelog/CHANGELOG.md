@@ -1,4 +1,13 @@
-﻿# Changelog â€” somacor_app
+﻿# Changelog — somacor_app
+
+## 2026-06-19
+- Recreada la app React completa en scripts/app/ (el código se perdió al reorganizar carpetas).
+- Configurado vite.config.ts con @tailwindcss/vite y tsconfig.app.json con resolveJsonModule.
+- Creado src/index.css con Tailwind v4, tema SOMACOR y clases utilitarias (.btn-primary, .card, etc.).
+- Creados todos los archivos fuente: types, store Zustand, componentes Header y ProtectedRoute, páginas Login, Home, Registrar, Consultar, Validar y Admin.
+- Generado scripts/app/src/data/supervisores.json (69 personas: 54 supervisores + 15 ADC).
+- Copiado data_output.json como src/data/somacor-data.json (1068 empleados, 101 CC).
+- App verificada y corriendo en http://localhost:5173.
 
 ## 2026-06-18
 - Proyecto creado en el repo puente. Planificacion completa disponible en PLANIFICACION.md (raiz del workspace).

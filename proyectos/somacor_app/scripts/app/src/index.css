@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --color-somacor-900: #0f2440;
+  --color-somacor-800: #1e3a5f;
+  --color-somacor-700: #254876;
+  --color-somacor-600: #2d578d;
+  --color-somacor-500: #3b6ea5;
+  --color-somacor-400: #5586bb;
+  --color-somacor-300: #7aa3cc;
+  --color-somacor-100: #dce8f5;
+  --color-somacor-50: #f0f5fb;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #f1f5f9;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.btn-primary {
+  @apply bg-somacor-800 hover:bg-somacor-700 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply bg-white hover:bg-gray-50 text-somacor-800 font-medium py-2 px-4 rounded-lg border border-somacor-300 transition-colors;
+}
+
+.btn-danger {
+  @apply bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50;
+}
+
+.btn-success {
+  @apply bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50;
+}
+
+.btn-warning {
+  @apply bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+}
+
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
+}
+
+.input {
+  @apply w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-somacor-500 focus:border-transparent;
+}
+
+.label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.badge-pendiente {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800;
+}
+
+.badge-validado {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800;
+}
+
+.badge-rechazado {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800;
+}

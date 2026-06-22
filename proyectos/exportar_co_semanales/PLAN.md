@@ -42,7 +42,8 @@ exportar_co_semanales/
 6. Al terminar, muestra un resumen con los archivos generados
 
 ## Estado
-En progreso — script creado, pendiente de prueba real con la cuenta de Fabric.
+LISTO PARA REVISAR — script probado exitosamente. Exporto 10 reportes PDF el 2026-06-19.
+Pendiente: probar con todos los reportes del workspace y validar que funcione en proximas ejecuciones.
 
 ## Notas / pendientes
 - Si un reporte tiene muchas páginas o datos, la exportación puede tardar hasta 2 minutos

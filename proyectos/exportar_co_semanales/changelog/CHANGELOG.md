@@ -7,4 +7,6 @@
 - Cambio de enfoque: creé exportar_reportes_playwright.py que usa el navegador Chrome
   directamente para exportar via la UI de PowerBI, sin restriccion de licencia.
 - Creé GUIA_PLAYWRIGHT.md con instrucciones de instalacion y uso paso a paso.
-- Pendiente: prueba real del script Playwright con la cuenta de Fabric.
+- Prueba exitosa: el script exporto 10 reportes PDF correctamente a la carpeta salidas/.
+- Flujo confirmado: click en "Exportar" (barra) > "PDF" > "Exportar" (boton verde del dialogo).
+- La sesion del navegador queda guardada en datos/sesion_browser/, no pide login la proxima vez.
