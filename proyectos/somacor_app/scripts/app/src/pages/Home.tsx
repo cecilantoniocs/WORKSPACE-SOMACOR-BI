@@ -8,7 +8,7 @@ const cards = [
     icon: ClipboardList,
     title: 'Registrar',
     desc: 'Ingresa horas extras o bonos para los trabajadores de tu centro de costo.',
-    color: 'bg-somacor-800 hover:bg-somacor-700',
+    bg: 'bg-somacor-800 hover:bg-somacor-900',
     roles: ['supervisor', 'adc', 'jefatura', 'gerencia', 'admin'] as const,
   },
   {
@@ -16,7 +16,7 @@ const cards = [
     icon: Search,
     title: 'Consultar',
     desc: 'Revisa y filtra los registros ya ingresados. Puedes exportarlos a Excel.',
-    color: 'bg-somacor-600 hover:bg-somacor-500',
+    bg: 'bg-brand-teal hover:bg-teal-700',
     roles: ['supervisor', 'adc', 'jefatura', 'gerencia', 'admin'] as const,
   },
   {
@@ -24,7 +24,7 @@ const cards = [
     icon: CheckCircle,
     title: 'Validar',
     desc: 'Aprueba o rechaza los registros pendientes de validación.',
-    color: 'bg-teal-700 hover:bg-teal-600',
+    bg: 'bg-brand-orange hover:bg-orange-700',
     roles: ['jefatura', 'gerencia', 'admin'] as const,
   },
   {
@@ -32,7 +32,7 @@ const cards = [
     icon: Settings,
     title: 'Administrar',
     desc: 'Asigna centros de costo a supervisores y administradores de contrato.',
-    color: 'bg-slate-700 hover:bg-slate-600',
+    bg: 'bg-somacor-900 hover:bg-somacor-900/80',
     roles: ['admin'] as const,
   },
 ];
@@ -60,7 +60,7 @@ export default function Home() {
             <Link
               key={card.to}
               to={card.to}
-              className={`${card.color} text-white rounded-xl p-6 flex flex-col gap-3 transition-colors shadow-sm`}
+              className={`${card.bg} text-white rounded-xl p-6 flex flex-col gap-3 transition-colors shadow-sm`}
             >
               <Icon className="w-8 h-8 opacity-90" />
               <div>

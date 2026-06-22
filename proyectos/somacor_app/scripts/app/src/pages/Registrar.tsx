@@ -6,7 +6,7 @@ import type { Registro, CentroCosto, Empleado, TipoRegistro } from '../types';
 import dataJson from '../data/somacor-data.json';
 
 interface SomacorData {
-  centrosCosto: CentroCosto[];
+  centrosDeCosto: CentroCosto[];
   empleados: Empleado[];
 }
 
@@ -31,8 +31,8 @@ export default function Registrar() {
 
   const ccDisponibles = useMemo(() => {
     if (!usuarioActivo) return [];
-    if (usuarioActivo.verTodosLosCc) return data.centrosCosto;
-    return data.centrosCosto.filter(cc => usuarioActivo.centrosCosto.includes(cc.codigo));
+    if (usuarioActivo.verTodosLosCc) return data.centrosDeCosto;
+    return data.centrosDeCosto.filter(cc => usuarioActivo.centrosCosto.includes(cc.codigo));
   }, [usuarioActivo]);
 
   const empleadosDelCc = useMemo(() => {

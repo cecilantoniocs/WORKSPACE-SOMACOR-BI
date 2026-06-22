@@ -9,7 +9,7 @@ import type { CentroCosto } from '../types';
 
 interface SupervisorData { rut: string; nombre: string; cargo: string; tipo: 'supervisor' | 'adc'; }
 const supervisoresData = supervisoresJson as SupervisorData[];
-const centrosCostoData = (dataJson as { centrosCosto: CentroCosto[] }).centrosCosto;
+const centrosCostoData = (dataJson as { centrosDeCosto: CentroCosto[] }).centrosDeCosto;
 
 interface ModalExternoProps {
   onClose: () => void;

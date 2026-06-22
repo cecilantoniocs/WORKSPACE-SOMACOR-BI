@@ -1,5 +1,12 @@
 ﻿# Changelog — somacor_app
 
+## 2026-06-22
+- Corregido bug crítico: el JSON usa `centrosDeCosto` pero el código buscaba `centrosCosto`. Causaba pantalla blanca en Registrar y Admin.
+- Actualizada paleta de colores: azul principal #2d67aa, teal #17a6a4, acento naranja #e45021, rojo #df0847, cyan #0cc0df.
+- Rediseñado Header con logo SOMACOR (SVG del ícono cuadrado+círculo) y barra de colores del logo bajo el encabezado.
+- Actualizadas tarjetas del Home con los nuevos colores por sección.
+- Actualizado fondo del Login con gradiente de los colores SOMACOR.
+
 ## 2026-06-19
 - Recreada la app React completa en scripts/app/ (el código se perdió al reorganizar carpetas).
 - Configurado vite.config.ts con @tailwindcss/vite y tsconfig.app.json con resolveJsonModule.
