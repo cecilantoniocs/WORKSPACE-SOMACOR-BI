@@ -31,8 +31,7 @@ TIMEOUT_PDF    = 120   # segundos maximos esperando que se genere el PDF
 # ─── UTILIDADES ───────────────────────────────────────────────────────────────
 
 def limpiar_nombre(nombre: str) -> str:
-    limpio = re.sub(r"[^\w\s-]", "", nombre).strip()
-    return re.sub(r"\s+", "_", limpio)
+    return re.sub(r"[^\w\s-]", "", nombre).strip()
 
 
 def click_primero_visible(page, selectores: list, espera_ms=3000) -> bool:
