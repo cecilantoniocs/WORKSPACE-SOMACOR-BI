@@ -60,25 +60,42 @@ def obtener_reportes(page) -> list:
 
     time.sleep(5)
 
-    # Scroll progresivo para forzar que PowerBI cargue todos los reportes
+    # Scroll progresivo simulando rueda del mouse para que PowerBI cargue todos los items
     try:
+        # Hacer click en el centro de la pagina para asegurar el foco
+        page.mouse.click(800, 400)
+        time.sleep(1)
+
         ids_anteriores = 0
-        for _ in range(15):
-            page.evaluate("window.scrollBy(0, 600)")
+        sin_cambios = 0
+
+        for _ in range(25):
+            # Simular rueda del mouse hacia abajo (igual que el usuario)
+            page.mouse.wheel(0, 500)
             time.sleep(2)
 
-            # Contar cuantos reportes hay visibles hasta ahora
             ids_ahora = page.evaluate("""
-                () => document.querySelectorAll('a[href*="/reports/"]').length
+                () => {
+                    const html = document.documentElement.innerHTML;
+                    const regex = /\\/reports\\/([a-f0-9\\-]{36})/g;
+                    const ids = new Set();
+                    let m;
+                    while ((m = regex.exec(html)) !== null) ids.add(m[1]);
+                    return ids.size;
+                }
             """)
 
-            # Si ya no aparecen reportes nuevos tras dos scrolls, parar
+            print(f"  Scroll... {ids_ahora} reporte(s) encontrados hasta ahora")
+
             if ids_ahora == ids_anteriores:
-                break
+                sin_cambios += 1
+                if sin_cambios >= 3:
+                    break
+            else:
+                sin_cambios = 0
+
             ids_anteriores = ids_ahora
 
-        page.evaluate("window.scrollTo(0, 0)")
-        time.sleep(2)
     except Exception:
         time.sleep(3)
 
