@@ -1,5 +1,3 @@
-2026/06/19-10:47:38.673 5e3c Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Local Storage\leveldb/MANIFEST-000001
-2026/06/19-10:47:38.682 5e3c Recovering log #3
-2026/06/19-10:47:38.684 5e3c Level-0 table #3: started
-2026/06/19-10:47:38.696 5e3c Level-0 table #3: 102773 bytes OK
-2026/06/19-10:47:38.706 5e3c Delete type=0 #3
+2026/06/19-11:11:48.606 804 Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Local Storage\leveldb/MANIFEST-000001
+2026/06/19-11:11:48.617 804 Recovering log #4
+2026/06/19-11:11:48.622 804 Reusing old log c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Local Storage\leveldb/000004.log 

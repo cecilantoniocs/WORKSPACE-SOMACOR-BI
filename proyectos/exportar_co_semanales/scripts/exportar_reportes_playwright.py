@@ -60,10 +60,23 @@ def obtener_reportes(page) -> list:
 
     time.sleep(5)
 
-    # Scroll para forzar la carga de todos los items
+    # Scroll progresivo para forzar que PowerBI cargue todos los reportes
     try:
-        page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-        time.sleep(3)
+        ids_anteriores = 0
+        for _ in range(15):
+            page.evaluate("window.scrollBy(0, 600)")
+            time.sleep(2)
+
+            # Contar cuantos reportes hay visibles hasta ahora
+            ids_ahora = page.evaluate("""
+                () => document.querySelectorAll('a[href*="/reports/"]').length
+            """)
+
+            # Si ya no aparecen reportes nuevos tras dos scrolls, parar
+            if ids_ahora == ids_anteriores:
+                break
+            ids_anteriores = ids_ahora
+
         page.evaluate("window.scrollTo(0, 0)")
         time.sleep(2)
     except Exception:
@@ -120,7 +133,7 @@ def exportar_reporte(page, reporte_id: str, reporte_nombre: str,
         f"https://app.powerbi.com/groups/{WORKSPACE_ID}"
         f"/reports/{reporte_id}/ReportSection"
     )
-    nombre_archivo = f"{fecha}_{limpiar_nombre(reporte_nombre)}.pdf"
+    nombre_archivo = f"{limpiar_nombre(reporte_nombre)}.pdf"
     ruta_archivo   = CARPETA_SALIDA / nombre_archivo
 
     # Navegar al reporte
