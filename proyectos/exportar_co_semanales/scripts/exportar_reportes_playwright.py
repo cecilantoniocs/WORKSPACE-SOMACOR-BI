@@ -24,7 +24,7 @@ CARPETA_SESION = BASE_DIR / "datos" / "sesion_browser"
 CARPETA_SALIDA = BASE_DIR / "salidas"
 
 ESPERA_CARGA   = 12    # segundos que espera a que cargue cada reporte
-TIMEOUT_LOGIN  = 300   # segundos maximos para que el usuario haga login
+TIMEOUT_LOGIN  = 180   # segundos maximos para que el usuario haga login
 TIMEOUT_PDF    = 120   # segundos maximos esperando que se genere el PDF
 
 
@@ -60,82 +60,56 @@ def obtener_reportes(page) -> list:
 
     time.sleep(5)
 
-    # Scroll progresivo simulando rueda del mouse para que PowerBI cargue todos los items
+    # Scroll progresivo acumulando reportes a medida que aparecen en pantalla
+    # (PowerBI borra del DOM los items que quedan fuera de la vista)
+    reportes_acumulados = {}
+
     try:
-        # Hacer click en el centro de la pagina para asegurar el foco
         page.mouse.click(800, 400)
         time.sleep(1)
 
-        ids_anteriores = 0
         sin_cambios = 0
 
-        for _ in range(25):
-            # Simular rueda del mouse hacia abajo (igual que el usuario)
-            page.mouse.wheel(0, 500)
-            time.sleep(2)
-
-            ids_ahora = page.evaluate("""
+        for _ in range(30):
+            # Capturar los reportes visibles en este momento
+            visibles = page.evaluate("""
                 () => {
-                    const html = document.documentElement.innerHTML;
-                    const regex = /\\/reports\\/([a-f0-9\\-]{36})/g;
-                    const ids = new Set();
-                    let m;
-                    while ((m = regex.exec(html)) !== null) ids.add(m[1]);
-                    return ids.size;
+                    const links = document.querySelectorAll('a[href*="/reports/"]');
+                    const lista = [];
+                    links.forEach(link => {
+                        const match = link.href.match(/\\/reports\\/([a-f0-9\\-]{36})/);
+                        if (!match) return;
+                        let nombre = (link.textContent || "").replace(/\\s+/g, " ").trim();
+                        if (!nombre) nombre = link.getAttribute("aria-label") || "";
+                        if (!nombre) nombre = link.getAttribute("title") || "";
+                        if (nombre) lista.push({ id: match[1], nombre: nombre });
+                    });
+                    return lista;
                 }
             """)
 
-            print(f"  Scroll... {ids_ahora} reporte(s) encontrados hasta ahora")
+            nuevos = 0
+            for r in visibles:
+                if r["id"] not in reportes_acumulados:
+                    reportes_acumulados[r["id"]] = r["nombre"]
+                    nuevos += 1
 
-            if ids_ahora == ids_anteriores:
+            print(f"  Scroll... {len(reportes_acumulados)} reporte(s) acumulados")
+
+            if nuevos == 0:
                 sin_cambios += 1
                 if sin_cambios >= 3:
                     break
             else:
                 sin_cambios = 0
 
-            ids_anteriores = ids_ahora
+            page.mouse.wheel(0, 500)
+            time.sleep(2)
 
     except Exception:
         time.sleep(3)
 
-    reportes = page.evaluate("""
-        () => {
-            const vistos = new Set();
-            const lista  = [];
-
-            // Buscar en todos los elementos del DOM cualquier referencia a /reports/{uuid}
-            const todo_html = document.documentElement.innerHTML;
-            const regex = /groups\\/[a-f0-9\\-]{36}\\/reports\\/([a-f0-9\\-]{36})/g;
-            let coincidencia;
-
-            while ((coincidencia = regex.exec(todo_html)) !== null) {
-                const id = coincidencia[1];
-                if (vistos.has(id)) continue;
-                vistos.add(id);
-
-                // Buscar un elemento cercano que tenga el nombre del reporte
-                const enlace = document.querySelector(
-                    'a[href*="/reports/' + id + '"]'
-                );
-
-                let nombre = "";
-                if (enlace) {
-                    nombre = (enlace.textContent || "").replace(/\\s+/g, " ").trim();
-                    if (!nombre) nombre = enlace.getAttribute("aria-label") || "";
-                    if (!nombre) nombre = enlace.getAttribute("title") || "";
-                }
-
-                if (!nombre) nombre = "Reporte_" + id.substring(0, 8);
-
-                lista.push({ id: id, nombre: nombre });
-            }
-
-            return lista;
-        }
-    """)
-
-    return reportes or []
+    return [{"id": k, "nombre": v} for k, v in reportes_acumulados.items()]
 
 
 # ─── EXPORTAR UN REPORTE A PDF ────────────────────────────────────────────────
@@ -261,8 +235,8 @@ def main():
         try:
             page.wait_for_url(f"**/{WORKSPACE_ID}/**", timeout=TIMEOUT_LOGIN * 1000)
             # Esperar que PowerBI termine de cargar completamente tras el login
-            print("  Login detectado. Esperando que PowerBI cargue (2 minutos)...")
-            time.sleep(120)
+            print("  Login detectado. Esperando que PowerBI cargue (1 minuto)...")
+            time.sleep(60)
         except Exception:
             print()
             print("ERROR: El workspace no cargo en 5 minutos.")

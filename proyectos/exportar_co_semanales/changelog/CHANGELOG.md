@@ -1,5 +1,12 @@
 # Changelog — exportar_co_semanales
 
+## 2026-06-22
+- Corregido problema de scroll: PowerBI borraba del DOM los items al desplazarse,
+  ahora el script acumula los reportes a medida que aparecen en pantalla.
+- Script encuentra y exporta los 25 reportes correctamente.
+- Nombre de archivo sin fecha y con espacios normales (igual que en PowerBI).
+- Tiempos de espera reducidos: login 3 min, carga 1 min (sesion guardada en Chrome).
+
 ## 2026-06-19
 - Creé la estructura del proyecto (carpetas datos/, scripts/, salidas/, changelog/).
 - Creé el script exportar_reportes.ps1 (via API REST de PowerBI) - descartado porque
