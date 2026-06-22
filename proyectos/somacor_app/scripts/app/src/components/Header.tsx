@@ -10,16 +10,6 @@ const TIPO_LABEL: Record<string, string> = {
   admin: 'Administrador',
 };
 
-function LogoMark() {
-  return (
-    <svg width="36" height="36" viewBox="0 0 60 60" fill="none" aria-hidden="true">
-      <rect width="60" height="60" rx="6" fill="white" fillOpacity="0.15" />
-      <circle cx="30" cy="30" r="17" stroke="white" strokeWidth="6" fill="none" />
-      <circle cx="30" cy="30" r="6" fill="white" fillOpacity="0.5" />
-    </svg>
-  );
-}
-
 export default function Header() {
   const usuarioActivo = useStore(s => s.usuarioActivo);
   const logout = useStore(s => s.logout);
@@ -34,19 +24,22 @@ export default function Header() {
     <>
       <header className="bg-somacor-800 text-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+
+          {/* Logo SOMACOR */}
           <div className="flex items-center gap-3">
-            <LogoMark />
-            <div>
-              <span className="text-xl font-extrabold tracking-widest">SOMACOR</span>
-              <span className="hidden sm:block text-xs text-somacor-300 tracking-wider -mt-0.5">
-                SERVICIOS INTEGRALES
-              </span>
+            <div className="bg-white rounded-lg px-2 py-1 shadow-sm">
+              <img
+                src="/logo-somacor.png"
+                alt="SOMACOR Servicios Integrales"
+                className="h-9 w-auto object-contain"
+              />
             </div>
-            <span className="hidden md:block text-somacor-400 text-sm ml-2 border-l border-somacor-600 pl-3">
+            <span className="hidden md:block text-somacor-200 text-sm border-l border-somacor-600 pl-3">
               Horas Extras y Bonos
             </span>
           </div>
 
+          {/* Usuario y botón salir */}
           {usuarioActivo && (
             <div className="flex items-center gap-4">
               <div className="text-right hidden sm:block">

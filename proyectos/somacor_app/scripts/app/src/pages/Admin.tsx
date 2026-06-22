@@ -202,7 +202,7 @@ function EditorUsuario({ persona, usuario, onGuardar }: EditorUsuarioProps) {
                       className="w-4 h-4 cursor-pointer"
                     />
                   </th>
-                  <th className="px-3 py-2 text-left font-medium text-xs tracking-wide">Nombre CC</th>
+                  <th className="px-3 py-2 text-left font-medium text-xs tracking-wide">Nombre Centro de Costo</th>
                   <th className="px-3 py-2 text-left font-medium text-xs tracking-wide w-28">Centro de Costo</th>
                 </tr>
               </thead>
@@ -240,12 +240,6 @@ function EditorUsuario({ persona, usuario, onGuardar }: EditorUsuarioProps) {
             </table>
           </div>
 
-          <button
-            onClick={toggleTodosCC}
-            className="w-full mt-2 text-xs font-medium py-1.5 rounded-lg border border-dashed border-gray-300 hover:border-somacor-800 hover:bg-somacor-50 text-gray-500 hover:text-somacor-800 transition-colors"
-          >
-            {todosSelCC ? '✗ Descartar todos los visibles' : '✓ Seleccionar todos los visibles'}
-          </button>
         </div>
       )}
 

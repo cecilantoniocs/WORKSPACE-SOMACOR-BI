@@ -16,7 +16,7 @@ type Paso = 'cc' | 'seleccion' | 'confirmacion' | 'exito';
 
 const PASOS = [
   { key: 'cc', label: 'Centro de costo' },
-  { key: 'seleccion', label: 'Trabajadores y detalle' },
+  { key: 'seleccion', label: 'Detalle Registro' },
   { key: 'confirmacion', label: 'Confirmación' },
 ] as const;
 
@@ -189,10 +189,10 @@ export default function Registrar() {
 
       {/* Paso 2: Trabajadores + Detalle (lado a lado) */}
       {paso === 'seleccion' && ccSeleccionado && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
 
           {/* Panel izquierdo: Trabajadores */}
-          <div className="card">
+          <div className="card flex flex-col">
             <div className="flex items-center justify-between mb-3">
               <div>
                 <h2 className="text-base font-semibold text-gray-800">Trabajadores</h2>
@@ -243,12 +243,12 @@ export default function Registrar() {
             </div>
 
             <button className="btn-secondary w-full mt-3 text-sm py-1.5" onClick={() => setPaso('cc')}>
-              <ChevronLeft className="w-4 h-4 inline" /> Cambiar CC
+              <ChevronLeft className="w-4 h-4 inline" /> Atrás
             </button>
           </div>
 
           {/* Panel derecho: Detalle del registro */}
-          <div className="card">
+          <div className="card flex flex-col">
             <h2 className="text-base font-semibold text-gray-800 mb-4">Detalle del registro</h2>
 
             <div className="mb-4">
@@ -344,7 +344,8 @@ export default function Registrar() {
 
       {/* Paso 3: Confirmación */}
       {paso === 'confirmacion' && ccSeleccionado && (
-        <div className="card max-w-lg">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="card">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">Confirmar registro</h2>
 
           <div className="bg-somacor-50 rounded-lg p-4 mb-4 space-y-2 text-sm">
@@ -402,6 +403,7 @@ export default function Registrar() {
               <Check className="w-4 h-4 inline mr-1" /> Confirmar y enviar
             </button>
           </div>
+        </div>
         </div>
       )}
     </div>
