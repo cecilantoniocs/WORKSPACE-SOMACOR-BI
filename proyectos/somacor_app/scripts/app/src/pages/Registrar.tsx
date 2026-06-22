@@ -12,7 +12,13 @@ interface SomacorData {
 
 const data = dataJson as SomacorData;
 
-type Paso = 'cc' | 'empleados' | 'formulario' | 'confirmacion' | 'exito';
+type Paso = 'cc' | 'seleccion' | 'confirmacion' | 'exito';
+
+const PASOS = [
+  { key: 'cc', label: 'Centro de costo' },
+  { key: 'seleccion', label: 'Trabajadores y detalle' },
+  { key: 'confirmacion', label: 'Confirmación' },
+] as const;
 
 export default function Registrar() {
   const usuarioActivo = useStore(s => s.usuarioActivo);
@@ -49,6 +55,10 @@ export default function Registrar() {
       : empleadosDelCc;
   }, [empleadosDelCc, busquedaEmpleado]);
 
+  const todosSel = empleadosFiltrados.length > 0 && empleadosFiltrados.every(e =>
+    empleadosSeleccionados.some(s => s.rut === e.rut)
+  );
+
   const toggleEmpleado = (emp: Empleado) => {
     setEmpleadosSeleccionados(prev =>
       prev.some(e => e.rut === emp.rut)
@@ -56,6 +66,21 @@ export default function Registrar() {
         : [...prev, emp]
     );
   };
+
+  const toggleTodosEmpleados = () => {
+    if (todosSel) {
+      const rutsFiltrados = new Set(empleadosFiltrados.map(e => e.rut));
+      setEmpleadosSeleccionados(prev => prev.filter(e => !rutsFiltrados.has(e.rut)));
+    } else {
+      const yaSelec = new Set(empleadosSeleccionados.map(e => e.rut));
+      const nuevos = empleadosFiltrados.filter(e => !yaSelec.has(e.rut));
+      setEmpleadosSeleccionados(prev => [...prev, ...nuevos]);
+    }
+  };
+
+  const formularioValido =
+    motivo.trim().length > 0 &&
+    (tipoRegistro === 'horas_extras' ? cantidadHe > 0 : montoBono > 0);
 
   const confirmarRegistro = () => {
     if (!usuarioActivo || !ccSeleccionado) return;
@@ -84,11 +109,13 @@ export default function Registrar() {
     setPaso('exito');
   };
 
+  const pasoIndex = PASOS.findIndex(p => p.key === paso);
+
   if (paso === 'exito') {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] gap-6">
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-          <Check className="w-10 h-10 text-green-600" />
+        <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center">
+          <Check className="w-10 h-10 text-brand-teal" />
         </div>
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900">¡Registrado con éxito!</h2>
@@ -111,28 +138,33 @@ export default function Registrar() {
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-5">
         <button onClick={() => navigate('/')} className="text-gray-400 hover:text-gray-600">
           <ChevronLeft className="w-5 h-5" />
         </button>
         <h1 className="text-xl font-bold text-gray-900">Registrar Horas Extras / Bono</h1>
       </div>
 
-      <div className="flex gap-2 mb-6">
-        {(['cc', 'empleados', 'formulario', 'confirmacion'] as Paso[]).map((p, i) => (
-          <div key={p} className="flex items-center gap-2">
-            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
-              ${paso === p ? 'bg-somacor-800 text-white' :
-                ['cc', 'empleados', 'formulario', 'confirmacion'].indexOf(paso) > i
-                  ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500'}`}>
-              {['cc', 'empleados', 'formulario', 'confirmacion'].indexOf(paso) > i
-                ? <Check className="w-4 h-4" /> : i + 1}
+      {/* Indicador de pasos */}
+      <div className="flex items-center gap-2 mb-6">
+        {PASOS.map((p, i) => (
+          <div key={p.key} className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0
+                ${pasoIndex === i ? 'bg-somacor-800 text-white' :
+                  pasoIndex > i ? 'bg-brand-teal text-white' : 'bg-gray-200 text-gray-400'}`}>
+                {pasoIndex > i ? <Check className="w-4 h-4" /> : i + 1}
+              </div>
+              <span className={`hidden sm:block text-xs font-medium ${pasoIndex === i ? 'text-somacor-800' : pasoIndex > i ? 'text-brand-teal' : 'text-gray-400'}`}>
+                {p.label}
+              </span>
             </div>
-            {i < 3 && <div className="w-8 h-0.5 bg-gray-200" />}
+            {i < PASOS.length - 1 && <div className="w-6 sm:w-12 h-0.5 bg-gray-200 flex-shrink-0" />}
           </div>
         ))}
       </div>
 
+      {/* Paso 1: Seleccionar CC */}
       {paso === 'cc' && (
         <div className="card">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">Selecciona el centro de costo</h2>
@@ -143,8 +175,8 @@ export default function Registrar() {
               {ccDisponibles.map(cc => (
                 <button
                   key={cc.codigo}
-                  onClick={() => { setCcSeleccionado(cc); setEmpleadosSeleccionados([]); setPaso('empleados'); }}
-                  className="text-left border border-gray-200 rounded-lg p-3 hover:border-somacor-400 hover:bg-somacor-50 transition-colors"
+                  onClick={() => { setCcSeleccionado(cc); setEmpleadosSeleccionados([]); setPaso('seleccion'); }}
+                  className="text-left border border-gray-200 rounded-lg p-3 hover:border-somacor-800 hover:bg-somacor-50 transition-colors"
                 >
                   <span className="font-mono text-xs text-gray-400">{cc.codigo}</span>
                   <p className="text-sm font-medium text-gray-800 mt-0.5">{cc.nombre}</p>
@@ -155,145 +187,162 @@ export default function Registrar() {
         </div>
       )}
 
-      {paso === 'empleados' && ccSeleccionado && (
-        <div className="card">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-lg font-semibold text-gray-800">Selecciona trabajadores</h2>
-              <p className="text-xs text-gray-400">{ccSeleccionado.nombre} ({ccSeleccionado.codigo})</p>
+      {/* Paso 2: Trabajadores + Detalle (lado a lado) */}
+      {paso === 'seleccion' && ccSeleccionado && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+
+          {/* Panel izquierdo: Trabajadores */}
+          <div className="card">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <h2 className="text-base font-semibold text-gray-800">Trabajadores</h2>
+                <p className="text-xs text-gray-400">{ccSeleccionado.nombre} · {ccSeleccionado.codigo}</p>
+              </div>
+              <span className="text-sm text-somacor-800 font-medium">{empleadosSeleccionados.length} sel.</span>
             </div>
-            <span className="text-sm text-somacor-600 font-medium">
-              {empleadosSeleccionados.length} seleccionado(s)
-            </span>
-          </div>
-          <input
-            className="input mb-3"
-            placeholder="Buscar por nombre o RUT..."
-            value={busquedaEmpleado}
-            onChange={e => setBusquedaEmpleado(e.target.value)}
-          />
-          <div className="max-h-80 overflow-y-auto border border-gray-100 rounded-lg divide-y">
-            {empleadosFiltrados.length === 0 && (
-              <p className="text-center text-gray-400 text-sm py-8">Sin resultados</p>
-            )}
-            {empleadosFiltrados.map(emp => {
-              const sel = empleadosSeleccionados.some(e => e.rut === emp.rut);
-              return (
-                <label key={emp.rut} className={`flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 ${sel ? 'bg-somacor-50' : ''}`}>
-                  <input type="checkbox" checked={sel} onChange={() => toggleEmpleado(emp)} className="w-4 h-4 text-somacor-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-800">{emp.nombre}</p>
-                    <p className="text-xs text-gray-400">{emp.cargo} · {emp.rut}</p>
-                  </div>
-                </label>
-              );
-            })}
-          </div>
-          <div className="flex justify-between mt-4">
-            <button className="btn-secondary" onClick={() => setPaso('cc')}>
-              <ChevronLeft className="w-4 h-4 inline" /> Atrás
-            </button>
-            <button
-              className="btn-primary"
-              disabled={empleadosSeleccionados.length === 0}
-              onClick={() => setPaso('formulario')}
-            >
-              Continuar <ChevronRight className="w-4 h-4 inline" />
-            </button>
-          </div>
-        </div>
-      )}
 
-      {paso === 'formulario' && (
-        <div className="card max-w-lg">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">Detalle del registro</h2>
-
-          <div className="mb-4">
-            <label className="label">Tipo de registro</label>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setTipoRegistro('horas_extras')}
-                className={`py-2.5 rounded-lg border text-sm font-medium transition-colors ${
-                  tipoRegistro === 'horas_extras'
-                    ? 'bg-somacor-800 text-white border-somacor-800'
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Horas Extras
-              </button>
-              <button
-                type="button"
-                onClick={() => setTipoRegistro('bono')}
-                className={`py-2.5 rounded-lg border text-sm font-medium transition-colors ${
-                  tipoRegistro === 'bono'
-                    ? 'bg-somacor-800 text-white border-somacor-800'
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Bono
-              </button>
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <label className="label">Fecha</label>
-            <input type="date" className="input" value={fecha} onChange={e => setFecha(e.target.value)} />
-          </div>
-
-          {tipoRegistro === 'horas_extras' ? (
-            <div className="mb-4">
-              <label className="label">Cantidad de horas extras</label>
-              <input
-                type="number"
-                min={0.5}
-                step={0.5}
-                max={24}
-                className="input"
-                value={cantidadHe}
-                onChange={e => setCantidadHe(Number(e.target.value))}
-              />
-            </div>
-          ) : (
-            <div className="mb-4">
-              <label className="label">Monto del bono ($)</label>
-              <input
-                type="number"
-                min={0}
-                step={1000}
-                className="input"
-                value={montoBono}
-                onChange={e => setMontoBono(Number(e.target.value))}
-              />
-            </div>
-          )}
-
-          <div className="mb-6">
-            <label className="label">Motivo</label>
-            <textarea
-              className="input"
-              rows={3}
-              value={motivo}
-              onChange={e => setMotivo(e.target.value)}
-              placeholder="Describe el motivo del registro..."
+            <input
+              className="input mb-2"
+              placeholder="Buscar por nombre o RUT..."
+              value={busquedaEmpleado}
+              onChange={e => setBusquedaEmpleado(e.target.value)}
             />
+
+            {/* Seleccionar / Descartar todos */}
+            <button
+              onClick={toggleTodosEmpleados}
+              className="w-full text-left text-xs font-medium px-3 py-1.5 mb-1 rounded-lg border border-dashed border-gray-300 hover:border-somacor-800 hover:bg-somacor-50 text-gray-500 hover:text-somacor-800 transition-colors"
+            >
+              {todosSel ? '✗ Descartar todos los visibles' : '✓ Seleccionar todos los visibles'}
+            </button>
+
+            <div className="border border-gray-100 rounded-lg divide-y max-h-80 overflow-y-auto">
+              {empleadosFiltrados.length === 0 && (
+                <p className="text-center text-gray-400 text-sm py-8">Sin resultados</p>
+              )}
+              {empleadosFiltrados.map(emp => {
+                const sel = empleadosSeleccionados.some(e => e.rut === emp.rut);
+                return (
+                  <label
+                    key={emp.rut}
+                    className={`flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-gray-50 ${sel ? 'bg-somacor-50' : ''}`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={sel}
+                      onChange={() => toggleEmpleado(emp)}
+                      className="w-4 h-4 accent-somacor-800"
+                    />
+                    <div>
+                      <p className="text-sm font-medium text-gray-800 leading-tight">{emp.nombre}</p>
+                      <p className="text-xs text-gray-400">{emp.cargo} · {emp.rut}</p>
+                    </div>
+                  </label>
+                );
+              })}
+            </div>
+
+            <button className="btn-secondary w-full mt-3 text-sm py-1.5" onClick={() => setPaso('cc')}>
+              <ChevronLeft className="w-4 h-4 inline" /> Cambiar CC
+            </button>
           </div>
 
-          <div className="flex justify-between">
-            <button className="btn-secondary" onClick={() => setPaso('empleados')}>
-              <ChevronLeft className="w-4 h-4 inline" /> Atrás
-            </button>
+          {/* Panel derecho: Detalle del registro */}
+          <div className="card">
+            <h2 className="text-base font-semibold text-gray-800 mb-4">Detalle del registro</h2>
+
+            <div className="mb-4">
+              <label className="label">Tipo de registro</label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setTipoRegistro('horas_extras')}
+                  className={`py-2.5 rounded-lg border text-sm font-medium transition-colors ${
+                    tipoRegistro === 'horas_extras'
+                      ? 'bg-somacor-800 text-white border-somacor-800'
+                      : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Horas Extras
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTipoRegistro('bono')}
+                  className={`py-2.5 rounded-lg border text-sm font-medium transition-colors ${
+                    tipoRegistro === 'bono'
+                      ? 'bg-somacor-800 text-white border-somacor-800'
+                      : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Bono
+                </button>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="label">Fecha</label>
+              <input
+                type="date"
+                className="input"
+                value={fecha}
+                onChange={e => setFecha(e.target.value)}
+              />
+            </div>
+
+            {tipoRegistro === 'horas_extras' ? (
+              <div className="mb-4">
+                <label className="label">Cantidad de horas extras</label>
+                <input
+                  type="number"
+                  min={0.5}
+                  step={0.5}
+                  max={24}
+                  className="input"
+                  value={cantidadHe}
+                  onChange={e => setCantidadHe(Number(e.target.value))}
+                />
+              </div>
+            ) : (
+              <div className="mb-4">
+                <label className="label">Monto del bono ($)</label>
+                <input
+                  type="number"
+                  min={0}
+                  step={1000}
+                  className="input"
+                  value={montoBono}
+                  onChange={e => setMontoBono(Number(e.target.value))}
+                />
+              </div>
+            )}
+
+            <div className="mb-5">
+              <label className="label">Motivo</label>
+              <textarea
+                className="input"
+                rows={3}
+                value={motivo}
+                onChange={e => setMotivo(e.target.value)}
+                placeholder="Describe el motivo del registro..."
+              />
+            </div>
+
+            {empleadosSeleccionados.length === 0 && (
+              <p className="text-xs text-amber-600 mb-3">Selecciona al menos un trabajador en el panel izquierdo.</p>
+            )}
+
             <button
-              className="btn-primary"
-              disabled={!motivo.trim() || (tipoRegistro === 'horas_extras' ? cantidadHe <= 0 : montoBono <= 0)}
+              className="btn-primary w-full"
+              disabled={empleadosSeleccionados.length === 0 || !formularioValido}
               onClick={() => setPaso('confirmacion')}
             >
-              Revisar <ChevronRight className="w-4 h-4 inline" />
+              Revisar y confirmar <ChevronRight className="w-4 h-4 inline ml-1" />
             </button>
           </div>
         </div>
       )}
 
+      {/* Paso 3: Confirmación */}
       {paso === 'confirmacion' && ccSeleccionado && (
         <div className="card max-w-lg">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">Confirmar registro</h2>
@@ -316,7 +365,9 @@ export default function Registrar() {
                 {tipoRegistro === 'horas_extras' ? 'Horas:' : 'Monto:'}
               </span>
               <span className="font-medium">
-                {tipoRegistro === 'horas_extras' ? `${cantidadHe} hr` : `$${montoBono.toLocaleString('es-CL')}`}
+                {tipoRegistro === 'horas_extras'
+                  ? `${cantidadHe} hr`
+                  : `$${montoBono.toLocaleString('es-CL')}`}
               </span>
             </div>
             <div className="flex justify-between">
@@ -325,20 +376,26 @@ export default function Registrar() {
             </div>
           </div>
 
-          <p className="text-sm font-medium text-gray-700 mb-2">Trabajadores ({empleadosSeleccionados.length}):</p>
+          <p className="text-sm font-medium text-gray-700 mb-2">
+            Trabajadores ({empleadosSeleccionados.length}):
+          </p>
           <div className="border border-gray-100 rounded-lg divide-y max-h-48 overflow-y-auto mb-4">
             {empleadosSeleccionados.map(emp => (
               <div key={emp.rut} className="flex items-center justify-between px-3 py-2">
                 <span className="text-sm">{emp.nombre}</span>
-                <button onClick={() => setEmpleadosSeleccionados(prev => prev.filter(e => e.rut !== emp.rut))}>
-                  <X className="w-4 h-4 text-gray-400 hover:text-red-500" />
+                <button
+                  onClick={() =>
+                    setEmpleadosSeleccionados(prev => prev.filter(e => e.rut !== emp.rut))
+                  }
+                >
+                  <X className="w-4 h-4 text-gray-400 hover:text-brand-red" />
                 </button>
               </div>
             ))}
           </div>
 
           <div className="flex justify-between">
-            <button className="btn-secondary" onClick={() => setPaso('formulario')}>
+            <button className="btn-secondary" onClick={() => setPaso('seleccion')}>
               <ChevronLeft className="w-4 h-4 inline" /> Atrás
             </button>
             <button className="btn-success" onClick={confirmarRegistro}>

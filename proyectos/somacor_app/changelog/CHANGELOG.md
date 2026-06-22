@@ -1,6 +1,12 @@
 ﻿# Changelog — somacor_app
 
 ## 2026-06-22
+- Admin: selector de CC reemplazado por tabla con columnas "Nombre CC" y "Centro de Costo". Checkbox en encabezado para seleccionar/descartar todos los visibles + botón de texto equivalente.
+- Registrar: pasos 2 y 3 fusionados en una sola pantalla dividida (izquierda: lista de trabajadores, derecha: formulario de detalle).
+- Registrar: agregado botón "Seleccionar/Descartar todos los visibles" en la lista de trabajadores.
+- Registrar: indicador de pasos actualizado de 4 a 3 etapas.
+
+## 2026-06-22
 - Corregido bug crítico: el JSON usa `centrosDeCosto` pero el código buscaba `centrosCosto`. Causaba pantalla blanca en Registrar y Admin.
 - Actualizada paleta de colores: azul principal #2d67aa, teal #17a6a4, acento naranja #e45021, rojo #df0847, cyan #0cc0df.
 - Rediseñado Header con logo SOMACOR (SVG del ícono cuadrado+círculo) y barra de colores del logo bajo el encabezado.

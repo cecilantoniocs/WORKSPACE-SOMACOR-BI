@@ -99,8 +99,21 @@ function EditorUsuario({ persona, usuario, onGuardar }: EditorUsuarioProps) {
       : centrosCostoData;
   }, [busquedaCc]);
 
+  const todosSelCC = ccsFiltrados.length > 0 && ccsFiltrados.every(cc => ccsSel.includes(cc.codigo));
+
   const toggleCc = (codigo: string) =>
     setCcsSel(prev => prev.includes(codigo) ? prev.filter(c => c !== codigo) : [...prev, codigo]);
+
+  const toggleTodosCC = () => {
+    if (todosSelCC) {
+      const filtrados = new Set(ccsFiltrados.map(cc => cc.codigo));
+      setCcsSel(prev => prev.filter(c => !filtrados.has(c)));
+    } else {
+      const yaSelec = new Set(ccsSel);
+      const nuevos = ccsFiltrados.filter(cc => !yaSelec.has(cc.codigo)).map(cc => cc.codigo);
+      setCcsSel(prev => [...prev, ...nuevos]);
+    }
+  };
 
   const handleGuardar = () => {
     if (!email.trim()) return;
@@ -166,33 +179,73 @@ function EditorUsuario({ persona, usuario, onGuardar }: EditorUsuarioProps) {
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="label mb-0">Centros de costo asignados</label>
-            <span className="text-xs text-somacor-600 font-medium">{ccsSel.length} seleccionado(s)</span>
+            <span className="text-xs text-somacor-800 font-medium">{ccsSel.length} seleccionado(s)</span>
           </div>
+
           <input
             className="input mb-2"
-            placeholder="Buscar CC..."
+            placeholder="Buscar por nombre o código..."
             value={busquedaCc}
             onChange={e => setBusquedaCc(e.target.value)}
           />
-          <div className="border border-gray-200 rounded-lg max-h-60 overflow-y-auto divide-y divide-gray-50">
-            {ccsFiltrados.map(cc => (
-              <label
-                key={cc.codigo}
-                className={`flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-gray-50 ${ccsSel.includes(cc.codigo) ? 'bg-somacor-50' : ''}`}
-              >
-                <input
-                  type="checkbox"
-                  checked={ccsSel.includes(cc.codigo)}
-                  onChange={() => toggleCc(cc.codigo)}
-                  className="w-4 h-4 text-somacor-600"
-                />
-                <div>
-                  <span className="text-sm font-medium text-gray-800">{cc.nombre}</span>
-                  <span className="text-xs text-gray-400 ml-2">{cc.codigo}</span>
-                </div>
-              </label>
-            ))}
+
+          <div className="border border-gray-200 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead className="sticky top-0 z-10">
+                <tr className="bg-somacor-800 text-white">
+                  <th className="w-8 px-3 py-2 text-left">
+                    <input
+                      type="checkbox"
+                      checked={todosSelCC}
+                      onChange={toggleTodosCC}
+                      title={todosSelCC ? 'Descartar todos' : 'Seleccionar todos'}
+                      className="w-4 h-4 cursor-pointer"
+                    />
+                  </th>
+                  <th className="px-3 py-2 text-left font-medium text-xs tracking-wide">Nombre CC</th>
+                  <th className="px-3 py-2 text-left font-medium text-xs tracking-wide w-28">Centro de Costo</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {ccsFiltrados.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="text-center text-gray-400 text-xs py-6">Sin resultados</td>
+                  </tr>
+                )}
+                {ccsFiltrados.map(cc => {
+                  const sel = ccsSel.includes(cc.codigo);
+                  return (
+                    <tr
+                      key={cc.codigo}
+                      onClick={() => toggleCc(cc.codigo)}
+                      className={`cursor-pointer hover:bg-somacor-50 transition-colors ${sel ? 'bg-somacor-50' : ''}`}
+                    >
+                      <td className="px-3 py-2">
+                        <input
+                          type="checkbox"
+                          checked={sel}
+                          onChange={() => toggleCc(cc.codigo)}
+                          onClick={e => e.stopPropagation()}
+                          className="w-4 h-4 accent-somacor-800"
+                        />
+                      </td>
+                      <td className={`px-3 py-2 ${sel ? 'font-medium text-somacor-900' : 'text-gray-700'}`}>
+                        {cc.nombre}
+                      </td>
+                      <td className="px-3 py-2 font-mono text-xs text-gray-400">{cc.codigo}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
+
+          <button
+            onClick={toggleTodosCC}
+            className="w-full mt-2 text-xs font-medium py-1.5 rounded-lg border border-dashed border-gray-300 hover:border-somacor-800 hover:bg-somacor-50 text-gray-500 hover:text-somacor-800 transition-colors"
+          >
+            {todosSelCC ? '✗ Descartar todos los visibles' : '✓ Seleccionar todos los visibles'}
+          </button>
         </div>
       )}
 
