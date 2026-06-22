@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useStore } from '../store/useStore';
 
 export default function Login() {
@@ -30,11 +30,15 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #1a3d68 0%, #2d67aa 50%, #17a6a4 100%)' }}>
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-2xl mb-4">
-            <Shield className="w-9 h-9 text-white" />
+          <div className="inline-flex items-center justify-center bg-white rounded-2xl px-8 py-4 mb-5 shadow-lg">
+            <img
+              src="/logo-somacor.png"
+              alt="SOMACOR Servicios Integrales"
+              className="h-24 w-auto object-contain"
+            />
           </div>
           <h1 className="text-3xl font-bold text-white">SOMACOR</h1>
-          <p className="text-somacor-200 mt-1">Registro de Horas Extras y Bonos</p>
+          <p className="text-white mt-1 text-base font-medium">Registro de Horas Extras y Bonos</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-2xl p-8">
