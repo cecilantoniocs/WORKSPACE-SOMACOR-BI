@@ -113,9 +113,10 @@ La tabla debe verse y comportarse como la hoja **"Registro Asistencia"** del Exc
 - Sugerido (mejora visual, opcional): colorear la celda según la sigla para leer rápido la grilla.
 
 ### 4.5 Filas de trabajadores
-- Una fila por trabajador del CC (vienen de la base de empleados, filtrados por `codigo_cc`).
-- **Pendiente a confirmar:** qué hacer con días no aplicables (ej. trabajador que ingresó a mitad
-  de mes o fue desvinculado). En el Excel esas filas a veces quedan con días sin llenar. Ver §8.
+- Una fila por trabajador del CC (vienen de la base de datos, filtrados por `codigo_cc`).
+- **Días sin llenar = normal.** Una celda vacía simplemente significa que ese día aún no se registra
+  (ej. en un mes en curso como junio, los días que todavía no ocurren quedan vacíos). No tiene un
+  significado especial: se va completando a medida que avanza el mes.
 
 ---
 
@@ -176,6 +177,10 @@ que cada mes sea independiente.
 **Clave única:** (`codigo_cc`, `rut_empleado`, `anio`, `mes`, `dia`).
 Esto asegura que **un mes no pisa a otro** y que cada celda tiene un único valor.
 
+> **Sin validación:** la asistencia **solo se registra**. No lleva estados
+> (pendiente/validado/rechazado) ni flujo de aprobación, a diferencia de Horas Extras y Bonos.
+> Una celda sin sigla = día aún no registrado (no es un error).
+
 > La grilla del UI se arma a partir de estas filas (pivot: filas = trabajadores, columnas = días).
 > Alternativa simple: guardar un registro por trabajador-mes con un arreglo de siglas
 > (`siglas: ["TO","TO","DESC", …]`). Es más parecido al Excel pero peor para reportes; se deja
@@ -199,30 +204,41 @@ Las rutas actuales de `PLAN-app-horasextras-bonos.md` se mantienen. Se **agregan
   "Horas Extras y Bonos" se entra al flujo ya existente; al elegir "Registro de Asistencia" se
   entra a `/registro-asistencia/cc`.
 - Permisos: se reutiliza el esquema actual (cada usuario ve solo sus CC; jefatura/admin ven todos).
-  **Pendiente confirmar** si la asistencia tiene flujo de validación como las HE/Bonos (ver §8).
+- La asistencia **no tiene flujo de validación**: solo se registra (ver §6.2).
 
 ---
 
-## 8. Notas / pendientes (a confirmar con Cecil / Michell)
+## 8. Decisiones tomadas
 
-1. **Fecha de ingreso y cargo:** el Excel original `Lista Empleados de somacor.xlsx` **sí** trae
-   `Fecha de Ingreso` y `Cargo`, pero el `somacor-data.json` actual **no** los extrajo. Hay que
-   volver a generar la data de empleados incluyendo esos dos campos para llenar la columna
-   `Ingreso` y `Cargo` de la grilla.
-2. **Filas/días incompletos:** en el Excel algunas filas no llenan todos los días del mes
-   (ej. guardias que quedan llenos solo hasta cierto día). ¿Es data a medio llenar, o significa
-   algo (ingreso a mitad de mes / desvinculación)? Definir cómo se maneja en la grilla.
-3. **¿Las 12 siglas son fijas o administrables?** Si pueden cambiar, conviene un mini-CRUD de
-   siglas en el panel de Admin.
-4. **¿La asistencia se valida?** Confirmar si necesita estados (pendiente/validado) y flujo de
-   validación por jefatura, igual que HE/Bonos, o si solo se registra.
-5. **¿Un trabajador puede aparecer en más de un CC el mismo mes?** En la lista de empleados un
-   trabajador tiene hasta 3 CC. Definir en qué grilla(s) debe aparecer.
-6. **Talana:** más adelante la base de empleados y la asistencia se conectarán a la API de Talana.
+1. **Origen de los datos = base de datos (luego Talana).** El dato principal es el **trabajador**
+   (nombre/RUT); el CC es un atributo del trabajador. La base puede equivocarse y no asignarle CC
+   a un trabajador, pero **nunca** va a haber un CC con trabajadores "sin nombre". Por eso:
+   - **Siempre se crea grilla de asistencia para un CC que tiene trabajadores.**
+   - Si un CC **no tiene** trabajadores, no se crea (en la práctica no debería pasar).
+   - El `cargo` y la `Fecha de Ingreso` salen de la ficha del trabajador en la BD.
+   > Nota: el archivo `somacor-data.json` fue solo una prueba para validar VS Code; **no se usa**
+   > como fuente de datos de este módulo.
+
+2. **Días sin llenar = normal.** Una celda vacía significa que ese día todavía no se registra
+   (típico en un mes en curso, como junio: los días que aún no pasan quedan vacíos). No es error
+   ni tiene significado especial; se completa a medida que avanza el mes.
+
+3. **Las 12 siglas son fijas por ahora.** Se cargan como catálogo. No se necesita CRUD de siglas
+   de momento (si más adelante cambian, se reevalúa).
+
+4. **La asistencia solo se registra.** Sin estados ni flujo de validación (a diferencia de HE/Bonos).
+
+5. **Trabajador en más de un CC:** puede ocurrir cuando se está **migrando** el CC de un trabajador
+   (ej. de 203 a 209). Es un caso de detalle; la regla simple se mantiene: el trabajador aparece en
+   la grilla del/los CC que tenga asignado(s) en la BD.
+
+6. **Talana:** más adelante la base de trabajadores y la asistencia se conectarán a la API de Talana.
+   Se usa la **misma base de datos** que el módulo de Horas Extras y Bonos.
 
 ---
 
 ## 9. Estado
 
-**EN DEFINICIÓN** — Documento de planificación creado. A la espera de confirmar los pendientes
-de §8 antes de empezar a programar el módulo. No se ha escrito código todavía.
+**LISTO PARA REVISAR** — Documento de planificación del módulo de Registro de Asistencia completo,
+con las decisiones ya confirmadas (§8). Falta la aprobación de Cecil/Michell para empezar a
+programar. No se ha escrito código todavía.

@@ -3,6 +3,7 @@
 ## 2026-06-23
 - Analizados los Excel "CCXXX - Remuneraciones" (hojas "Registro Asistencia" y "Siglas Asistencia") para entender el formato de la planilla mensual de asistencia.
 - Creado PLAN-registro-asistencia.md: documento del nuevo módulo de Registro de Asistencia que se suma a la app (ahora "App de Remuneraciones"). No se tocó PLAN-app-horasextras-bonos.md.
+- Afinado PLAN-registro-asistencia.md con las decisiones confirmadas: datos vienen de la BD (no de somacor-data.json), días vacíos son normales (mes en curso), 12 siglas fijas, asistencia solo se registra (sin validación). Estado: LISTO PARA REVISAR.
 
 ## 2026-06-22
 - Admin: selector de CC reemplazado por tabla con columnas "Nombre CC" y "Centro de Costo". Checkbox en encabezado para seleccionar/descartar todos los visibles + botón de texto equivalente.
