@@ -1,9 +1,20 @@
-2026/06/22-11:53:35.684 3dac Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Session Storage/MANIFEST-000001
-2026/06/22-11:53:35.686 3dac Recovering log #86
-2026/06/22-11:53:35.690 3dac Reusing old log c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Session Storage/000086.log 
-2026/06/22-11:54:36.089 5730 Level-0 table #91: started
-2026/06/22-11:54:36.097 5730 Level-0 table #91: 29656 bytes OK
-2026/06/22-11:54:36.100 5730 Delete type=0 #86
-2026/06/22-11:55:43.618 3dac Level-0 table #93: started
-2026/06/22-11:55:43.628 3dac Level-0 table #93: 39208 bytes OK
-2026/06/22-11:55:43.632 3dac Delete type=0 #90
+2026/06/23-11:05:47.176 18e0 Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Session Storage/MANIFEST-000001
+2026/06/23-11:05:47.191 18e0 Recovering log #92
+2026/06/23-11:05:47.192 18e0 Level-0 table #95: started
+2026/06/23-11:05:47.202 18e0 Level-0 table #95: 20827 bytes OK
+2026/06/23-11:05:47.210 18e0 Delete type=0 #92
+2026/06/23-11:07:47.443 18e0 Level-0 table #98: started
+2026/06/23-11:07:47.450 18e0 Level-0 table #98: 36139 bytes OK
+2026/06/23-11:07:47.452 18e0 Delete type=0 #96
+2026/06/23-11:07:47.453 5348 Compacting 4@0 + 1@1 files
+2026/06/23-11:07:47.463 5348 Generated table #99@0: 20 keys, 25126 bytes
+2026/06/23-11:07:47.463 5348 Compacted 4@0 + 1@1 files => 25126 bytes
+2026/06/23-11:07:47.465 5348 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/23-11:07:47.466 5348 Delete type=2 #88
+2026/06/23-11:07:47.466 5348 Delete type=2 #91
+2026/06/23-11:07:47.466 5348 Delete type=2 #93
+2026/06/23-11:07:47.466 5348 Delete type=2 #95
+2026/06/23-11:07:47.466 5348 Delete type=2 #98
+2026/06/23-11:10:47.447 5348 Level-0 table #101: started
+2026/06/23-11:10:47.456 5348 Level-0 table #101: 22160 bytes OK
+2026/06/23-11:10:47.459 5348 Delete type=0 #97
