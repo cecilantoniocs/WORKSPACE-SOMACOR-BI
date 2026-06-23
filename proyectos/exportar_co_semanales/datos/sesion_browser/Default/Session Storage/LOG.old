@@ -1,9 +1,125 @@
-2026/06/22-11:53:35.684 3dac Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Session Storage/MANIFEST-000001
-2026/06/22-11:53:35.686 3dac Recovering log #86
-2026/06/22-11:53:35.690 3dac Reusing old log c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Session Storage/000086.log 
-2026/06/22-11:54:36.089 5730 Level-0 table #91: started
-2026/06/22-11:54:36.097 5730 Level-0 table #91: 29656 bytes OK
-2026/06/22-11:54:36.100 5730 Delete type=0 #86
-2026/06/22-11:55:43.618 3dac Level-0 table #93: started
-2026/06/22-11:55:43.628 3dac Level-0 table #93: 39208 bytes OK
-2026/06/22-11:55:43.632 3dac Delete type=0 #90
+2026/06/23-12:23:01.236 47b8 Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Session Storage/MANIFEST-000001
+2026/06/23-12:23:01.237 47b8 Recovering log #100
+2026/06/23-12:23:01.238 47b8 Level-0 table #103: started
+2026/06/23-12:23:01.254 47b8 Level-0 table #103: 16916 bytes OK
+2026/06/23-12:23:01.260 47b8 Delete type=0 #100
+2026/06/23-12:24:01.578 62ac Level-0 table #106: started
+2026/06/23-12:24:01.586 62ac Level-0 table #106: 41204 bytes OK
+2026/06/23-12:24:01.589 62ac Delete type=0 #104
+2026/06/23-12:26:01.565 62ac Level-0 table #108: started
+2026/06/23-12:26:01.572 62ac Level-0 table #108: 35588 bytes OK
+2026/06/23-12:26:01.575 62ac Delete type=0 #105
+2026/06/23-12:26:01.575 62ac Compacting 4@0 + 1@1 files
+2026/06/23-12:26:01.583 62ac Generated table #109@0: 21 keys, 39633 bytes
+2026/06/23-12:26:01.583 62ac Compacted 4@0 + 1@1 files => 39633 bytes
+2026/06/23-12:26:01.585 62ac compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/23-12:26:01.586 62ac Delete type=2 #99
+2026/06/23-12:26:01.586 62ac Delete type=2 #101
+2026/06/23-12:26:01.586 62ac Delete type=2 #103
+2026/06/23-12:26:01.586 62ac Delete type=2 #106
+2026/06/23-12:26:01.586 62ac Delete type=2 #108
+2026/06/23-12:30:01.565 62ac Level-0 table #111: started
+2026/06/23-12:30:01.580 62ac Level-0 table #111: 40303 bytes OK
+2026/06/23-12:30:01.583 62ac Delete type=0 #107
+2026/06/23-12:32:01.566 62ac Level-0 table #113: started
+2026/06/23-12:32:01.583 62ac Level-0 table #113: 12642 bytes OK
+2026/06/23-12:32:01.586 62ac Delete type=0 #110
+2026/06/23-12:34:01.568 62ac Level-0 table #115: started
+2026/06/23-12:34:01.581 62ac Level-0 table #115: 43837 bytes OK
+2026/06/23-12:34:01.584 62ac Delete type=0 #112
+2026/06/23-12:35:01.574 62ac Level-0 table #117: started
+2026/06/23-12:35:01.581 62ac Level-0 table #117: 33862 bytes OK
+2026/06/23-12:35:01.584 62ac Delete type=0 #114
+2026/06/23-12:35:01.584 62ac Compacting 4@0 + 1@1 files
+2026/06/23-12:35:01.592 62ac Generated table #118@0: 21 keys, 55759 bytes
+2026/06/23-12:35:01.592 62ac Compacted 4@0 + 1@1 files => 55759 bytes
+2026/06/23-12:35:01.594 62ac compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/23-12:35:01.595 62ac Delete type=2 #109
+2026/06/23-12:35:01.595 62ac Delete type=2 #111
+2026/06/23-12:35:01.595 62ac Delete type=2 #113
+2026/06/23-12:35:01.595 62ac Delete type=2 #115
+2026/06/23-12:35:01.595 62ac Delete type=2 #117
+2026/06/23-12:37:01.575 62ac Level-0 table #120: started
+2026/06/23-12:37:01.592 62ac Level-0 table #120: 13275 bytes OK
+2026/06/23-12:37:01.595 62ac Delete type=0 #116
+2026/06/23-12:41:01.574 62ac Level-0 table #122: started
+2026/06/23-12:41:01.590 62ac Level-0 table #122: 15978 bytes OK
+2026/06/23-12:41:01.593 62ac Delete type=0 #119
+2026/06/23-12:43:01.578 62ac Level-0 table #124: started
+2026/06/23-12:43:01.596 62ac Level-0 table #124: 45739 bytes OK
+2026/06/23-12:43:01.606 62ac Delete type=0 #121
+2026/06/23-12:45:01.577 62ac Level-0 table #126: started
+2026/06/23-12:45:01.583 62ac Level-0 table #126: 13058 bytes OK
+2026/06/23-12:45:01.586 62ac Delete type=0 #123
+2026/06/23-12:45:01.587 62ac Compacting 4@0 + 1@1 files
+2026/06/23-12:45:01.593 62ac Generated table #127@0: 21 keys, 31183 bytes
+2026/06/23-12:45:01.593 62ac Compacted 4@0 + 1@1 files => 31183 bytes
+2026/06/23-12:45:01.595 62ac compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/23-12:45:01.596 62ac Delete type=2 #118
+2026/06/23-12:45:01.596 62ac Delete type=2 #120
+2026/06/23-12:45:01.596 62ac Delete type=2 #122
+2026/06/23-12:45:01.596 62ac Delete type=2 #124
+2026/06/23-12:45:01.596 62ac Delete type=2 #126
+2026/06/23-12:46:01.568 62ac Level-0 table #129: started
+2026/06/23-12:46:01.575 62ac Level-0 table #129: 24539 bytes OK
+2026/06/23-12:46:01.578 62ac Delete type=0 #125
+2026/06/23-12:48:01.569 62ac Level-0 table #131: started
+2026/06/23-12:48:01.587 62ac Level-0 table #131: 13245 bytes OK
+2026/06/23-12:48:01.590 62ac Delete type=0 #128
+2026/06/23-12:50:01.572 62ac Level-0 table #133: started
+2026/06/23-12:50:01.590 62ac Level-0 table #133: 45297 bytes OK
+2026/06/23-12:50:01.593 62ac Delete type=0 #130
+2026/06/23-12:51:01.565 62ac Level-0 table #135: started
+2026/06/23-12:51:01.582 62ac Level-0 table #135: 20981 bytes OK
+2026/06/23-12:51:01.585 62ac Delete type=0 #132
+2026/06/23-12:51:01.586 62ac Compacting 4@0 + 1@1 files
+2026/06/23-12:51:01.592 62ac Generated table #136@0: 21 keys, 42927 bytes
+2026/06/23-12:51:01.592 62ac Compacted 4@0 + 1@1 files => 42927 bytes
+2026/06/23-12:51:01.594 62ac compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/23-12:51:01.595 62ac Delete type=2 #127
+2026/06/23-12:51:01.595 62ac Delete type=2 #129
+2026/06/23-12:51:01.595 62ac Delete type=2 #131
+2026/06/23-12:51:01.595 62ac Delete type=2 #133
+2026/06/23-12:51:01.595 62ac Delete type=2 #135
+2026/06/23-12:53:01.565 62ac Level-0 table #138: started
+2026/06/23-12:53:01.583 62ac Level-0 table #138: 14800 bytes OK
+2026/06/23-12:53:01.586 62ac Delete type=0 #134
+2026/06/23-12:57:01.574 62ac Level-0 table #140: started
+2026/06/23-12:57:01.592 62ac Level-0 table #140: 9896 bytes OK
+2026/06/23-12:57:01.595 62ac Delete type=0 #137
+2026/06/23-12:59:01.568 62ac Level-0 table #142: started
+2026/06/23-12:59:01.582 62ac Level-0 table #142: 16020 bytes OK
+2026/06/23-12:59:01.591 62ac Delete type=0 #139
+2026/06/23-13:24:01.445 62ac Level-0 table #144: started
+2026/06/23-13:24:01.454 62ac Level-0 table #144: 37791 bytes OK
+2026/06/23-13:24:01.457 62ac Delete type=0 #141
+2026/06/23-13:24:01.457 62ac Compacting 4@0 + 1@1 files
+2026/06/23-13:24:01.464 62ac Generated table #145@0: 20 keys, 27882 bytes
+2026/06/23-13:24:01.464 62ac Compacted 4@0 + 1@1 files => 27882 bytes
+2026/06/23-13:24:01.466 62ac compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/23-13:24:01.467 62ac Delete type=2 #136
+2026/06/23-13:24:01.467 62ac Delete type=2 #138
+2026/06/23-13:24:01.467 62ac Delete type=2 #140
+2026/06/23-13:24:01.467 62ac Delete type=2 #142
+2026/06/23-13:24:01.467 62ac Delete type=2 #144
+2026/06/23-13:49:01.212 62ac Level-0 table #147: started
+2026/06/23-13:49:01.237 62ac Level-0 table #147: 30961 bytes OK
+2026/06/23-13:49:01.242 62ac Delete type=0 #143
+2026/06/23-14:48:21.625 62ac Level-0 table #149: started
+2026/06/23-14:48:21.633 62ac Level-0 table #149: 31103 bytes OK
+2026/06/23-14:48:21.636 62ac Delete type=0 #146
+2026/06/23-15:02:36.097 62ac Level-0 table #151: started
+2026/06/23-15:02:36.121 62ac Level-0 table #151: 27215 bytes OK
+2026/06/23-15:02:36.125 62ac Delete type=0 #148
+2026/06/23-15:14:36.672 62ac Level-0 table #153: started
+2026/06/23-15:14:36.682 62ac Level-0 table #153: 23547 bytes OK
+2026/06/23-15:14:36.685 62ac Delete type=0 #150
+2026/06/23-15:14:36.687 62ac Compacting 4@0 + 1@1 files
+2026/06/23-15:14:36.696 62ac Generated table #154@0: 20 keys, 27436 bytes
+2026/06/23-15:14:36.696 62ac Compacted 4@0 + 1@1 files => 27436 bytes
+2026/06/23-15:14:36.698 62ac compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/23-15:14:36.700 62ac Delete type=2 #145
+2026/06/23-15:14:36.700 62ac Delete type=2 #147
+2026/06/23-15:14:36.700 62ac Delete type=2 #149
+2026/06/23-15:14:36.700 62ac Delete type=2 #151
+2026/06/23-15:14:36.700 62ac Delete type=2 #153

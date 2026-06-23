@@ -1,3 +1,27 @@
-2026/06/22-11:53:35.610 3dac Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Local Storage\leveldb/MANIFEST-000001
-2026/06/22-11:53:35.616 3dac Recovering log #14
-2026/06/22-11:53:35.618 3dac Reusing old log c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Local Storage\leveldb/000014.log 
+2026/06/23-12:23:01.155 47b8 Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Local Storage\leveldb/MANIFEST-000001
+2026/06/23-12:23:01.161 47b8 Recovering log #14
+2026/06/23-12:23:01.165 47b8 Reusing old log c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Local Storage\leveldb/000014.log 
+2026/06/23-12:29:00.240 62ac Level-0 table #18: started
+2026/06/23-12:29:00.246 62ac Level-0 table #18: 16621 bytes OK
+2026/06/23-12:29:00.249 62ac Delete type=0 #14
+2026/06/23-12:35:18.215 62ac Level-0 table #20: started
+2026/06/23-12:35:18.232 62ac Level-0 table #20: 17602 bytes OK
+2026/06/23-12:35:18.236 62ac Delete type=0 #17
+2026/06/23-12:43:20.531 62ac Level-0 table #22: started
+2026/06/23-12:43:20.551 62ac Level-0 table #22: 15286 bytes OK
+2026/06/23-12:43:20.554 62ac Delete type=0 #19
+2026/06/23-12:43:20.555 62ac Compacting 4@0 + 1@1 files
+2026/06/23-12:43:20.563 62ac Generated table #23@0: 21 keys, 109865 bytes
+2026/06/23-12:43:20.563 62ac Compacted 4@0 + 1@1 files => 109865 bytes
+2026/06/23-12:43:20.566 62ac compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/23-12:43:20.567 62ac Delete type=2 #13
+2026/06/23-12:43:20.567 62ac Delete type=2 #15
+2026/06/23-12:43:20.567 62ac Delete type=2 #18
+2026/06/23-12:43:20.567 62ac Delete type=2 #20
+2026/06/23-12:43:20.567 62ac Delete type=2 #22
+2026/06/23-12:48:51.583 62ac Level-0 table #25: started
+2026/06/23-12:48:51.589 62ac Level-0 table #25: 16167 bytes OK
+2026/06/23-12:48:51.593 62ac Delete type=0 #21
+2026/06/23-12:53:27.885 62ac Level-0 table #27: started
+2026/06/23-12:53:27.906 62ac Level-0 table #27: 17113 bytes OK
+2026/06/23-12:53:27.909 62ac Delete type=0 #24

@@ -6,6 +6,9 @@
 - Script encuentra y exporta los 25 reportes correctamente.
 - Nombre de archivo sin fecha y con espacios normales (igual que en PowerBI).
 - Tiempos de espera reducidos: login 3 min, carga 1 min (sesion guardada en Chrome).
+- Solucionado el limite de Fabric (no permite mas de 20 reportes abiertos a la vez):
+  cada 15 reportes el script cierra la pestana para liberar los PowerBI abiertos y
+  abre una nueva, continuando la exportacion desde donde iba (sin reiniciar).
 
 ## 2026-06-19
 - Creé la estructura del proyecto (carpetas datos/, scripts/, salidas/, changelog/).

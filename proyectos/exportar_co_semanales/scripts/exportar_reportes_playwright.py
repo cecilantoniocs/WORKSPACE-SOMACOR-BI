@@ -26,6 +26,8 @@ CARPETA_SALIDA = BASE_DIR / "salidas"
 ESPERA_CARGA   = 12    # segundos que espera a que cargue cada reporte
 TIMEOUT_LOGIN  = 180   # segundos maximos para que el usuario haga login
 TIMEOUT_PDF    = 120   # segundos maximos esperando que se genere el PDF
+LIMITE_ABIERTOS = 15   # tras exportar estos reportes, cerrar la pestana y abrir una nueva
+                       # (Fabric no permite mas de 20 reportes abiertos a la vez)
 
 
 # ─── UTILIDADES ───────────────────────────────────────────────────────────────
@@ -272,9 +274,24 @@ def main():
 
         exitosos = []
         fallidos  = []
+        abiertos_en_pestana = 0   # cuenta cuantos reportes lleva abiertos la pestana actual
 
-        for reporte in reportes:
-            print(f"  Exportando: {reporte['nombre']}")
+        for indice, reporte in enumerate(reportes, start=1):
+
+            # Si la pestana ya abrio el limite de reportes, cerrarla y abrir una nueva
+            # limpia para liberar lo que Fabric tiene "abierto". El bucle NO se reinicia:
+            # continua con el siguiente reporte de la lista.
+            if abiertos_en_pestana >= LIMITE_ABIERTOS:
+                print(f"  -- Limite de {LIMITE_ABIERTOS} reportes abiertos alcanzado.")
+                print("  -- Cerrando pestana para liberar los PowerBI abiertos...")
+                page.close()
+                time.sleep(3)
+                page = context.new_page()
+                print("  -- Pestana nueva lista. Continuando la exportacion...")
+                print()
+                abiertos_en_pestana = 0
+
+            print(f"  Exportando ({indice}/{len(reportes)}): {reporte['nombre']}")
 
             ok, resultado = exportar_reporte(
                 page           = page,
@@ -282,6 +299,7 @@ def main():
                 reporte_nombre = reporte["nombre"],
                 fecha          = fecha_hoy,
             )
+            abiertos_en_pestana += 1
 
             if ok:
                 print(f"    OK - guardado: {resultado}")
