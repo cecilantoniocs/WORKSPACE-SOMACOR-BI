@@ -1,5 +1,9 @@
 ﻿# Changelog — somacor_app
 
+## 2026-06-23
+- Analizados los Excel "CCXXX - Remuneraciones" (hojas "Registro Asistencia" y "Siglas Asistencia") para entender el formato de la planilla mensual de asistencia.
+- Creado PLAN-registro-asistencia.md: documento del nuevo módulo de Registro de Asistencia que se suma a la app (ahora "App de Remuneraciones"). No se tocó PLAN-app-horasextras-bonos.md.
+
 ## 2026-06-22
 - Admin: selector de CC reemplazado por tabla con columnas "Nombre CC" y "Centro de Costo". Checkbox en encabezado para seleccionar/descartar todos los visibles + botón de texto equivalente.
 - Registrar: pasos 2 y 3 fusionados en una sola pantalla dividida (izquierda: lista de trabajadores, derecha: formulario de detalle).
