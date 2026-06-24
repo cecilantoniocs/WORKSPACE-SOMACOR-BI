@@ -257,3 +257,75 @@ ingreso real del trabajador (ver §8.1).
   - Guardado por `(CC + año + mes)` en el store Zustand (persistido); un mes no pisa a otro.
   - Botón "Volver" en todas las pantallas.
 - Catálogo de siglas y helpers en `scripts/app/src/data/siglas.ts`.
+
+---
+
+## 10. Estructura del frontend
+
+La app vive en `proyectos/app_horasextras_bonos/scripts/app/`. Es una app **React + TypeScript +
+Vite**, con **Tailwind CSS v4** para estilos, **Zustand** para el estado (persistido en el
+`localStorage` del navegador), **React Router** para la navegación y **lucide-react** para iconos.
+Mientras no exista backend/Talana, los empleados y CC salen de un JSON estático y todo lo que se
+escribe (registros y asistencia) queda en el navegador.
+
+### 10.1 Cómo ejecutarla
+```bash
+cd proyectos/app_horasextras_bonos/scripts/app
+npm install        # solo la primera vez
+npm run dev        # arranca en http://localhost:5173
+```
+Usuarios demo (clave `123456`): `adc@somacor.cl`, `supervisor@somacor.cl`, `jefatura@somacor.cl`,
+`admin@somacor.cl`.
+
+### 10.2 Árbol de archivos (lo relevante) — 🆕 = nuevo del módulo de asistencia
+```
+scripts/app/
+├── package.json            <- dependencias y scripts (dev / build / preview)
+├── vite.config.ts          <- configuración de Vite + Tailwind
+├── index.html              <- HTML raíz donde monta React
+├── public/                 <- estáticos (logo-somacor.png, favicon, etc.)
+└── src/
+    ├── main.tsx            <- punto de entrada: monta <App/>
+    ├── App.tsx             <- define TODAS las rutas (incl. las 🆕 de asistencia)
+    ├── index.css           <- tema SOMACOR (colores) y clases .card/.btn-*/.input
+    │
+    ├── types/
+    │   └── index.ts        <- tipos: Empleado, CentroCosto, Registro… + 🆕 Sigla, AsistenciaMes
+    │
+    ├── store/
+    │   └── useStore.ts     <- estado global Zustand (login, registros, usuarios,
+    │                          🆕 asistencias{} y la acción guardarAsistencia)
+    │
+    ├── data/
+    │   ├── somacor-data.json   <- empleados + centros de costo (fuente temporal)
+    │   ├── supervisores.json   <- usuarios supervisores/ADC
+    │   └── siglas.ts           <- 🆕 las 12 siglas, sus colores, meses, días de la
+    │                              semana y la función claveAsistencia(cc, año, mes)
+    │
+    ├── components/
+    │   ├── Header.tsx          <- barra superior (logo + usuario + salir)
+    │   └── ProtectedRoute.tsx  <- protege rutas según rol del usuario
+    │
+    └── pages/
+        ├── Login.tsx             <- inicio de sesión
+        ├── Inicio.tsx            <- 🆕 selector de módulo (Asistencia / HE y Bonos)
+        ├── Home.tsx              <- dashboard de Horas Extras y Bonos (ahora en /horas-extras)
+        ├── RegistroAsistencia.tsx<- 🆕 módulo de asistencia: selección (CC+mes+año) + grilla
+        ├── Registrar.tsx         <- registro de HE/Bonos (sin cambios)
+        ├── Consultar.tsx         <- consulta de HE/Bonos (sin cambios)
+        ├── Validar.tsx           <- validación HE/Bonos (sin cambios)
+        └── Admin.tsx             <- administración de usuarios/CC (sin cambios)
+```
+
+### 10.3 De dónde sale cada cosa en la grilla
+- **Filas (trabajadores):** `somacor-data.json`, filtrando los empleados cuyo `centrosCosto`
+  incluye el CC elegido.
+- **Columnas de día:** se calculan con `new Date(año, mes, 0).getDate()` (días reales del mes) y
+  el día de la semana con `new Date(año, mes-1, día).getDay()`.
+- **Siglas del selector:** `src/data/siglas.ts` (las 12, con su color de celda).
+- **Valor de cada celda:** del estado `asistencias` del store, bajo la clave `CC-AAAA-MM`,
+  con la forma `{ [rut]: { [día]: sigla } }`. Al guardar, se escribe esa clave; por eso un mes
+  no pisa a otro.
+- **Columna "Ingreso":** hoy muestra `—` porque `somacor-data.json` aún no trae la fecha de
+  ingreso (no se extrajo del Excel original). Se completará al re-extraer empleados o al
+  conectar Talana (ver §8.1).

@@ -272,9 +272,16 @@ export default function RegistroAsistencia() {
                           }`}
                           title={SIGLAS.find(s => s.sigla === valor)?.nombre ?? 'Sin registrar'}
                         >
-                          <option value="">·</option>
+                          <option value="" style={{ color: '#282b35', fontWeight: 700 }}>·</option>
                           {SIGLAS.map(s => (
-                            <option key={s.sigla} value={s.sigla}>{s.sigla}</option>
+                            <option
+                              key={s.sigla}
+                              value={s.sigla}
+                              title={s.nombre}
+                              style={{ color: '#282b35', fontWeight: 700 }}
+                            >
+                              {s.sigla}
+                            </option>
                           ))}
                         </select>
                       </td>
