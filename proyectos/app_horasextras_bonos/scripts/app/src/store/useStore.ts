@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Registro } from '../types';
+import type { Registro, AsistenciaMes } from '../types';
 
 export type TipoUsuario = 'supervisor' | 'adc' | 'jefatura' | 'gerencia' | 'admin';
 
@@ -61,6 +61,8 @@ interface StoreState {
   usuarioActivo: UsuarioApp | null;
   registros: Registro[];
   usuarios: UsuarioApp[];
+  // Asistencia: clave "CC-AAAA-MM" -> { rut -> { día -> sigla } }
+  asistencias: Record<string, AsistenciaMes>;
   login: (email: string, password: string) => boolean;
   logout: () => void;
   addRegistros: (registros: Registro[]) => void;
@@ -69,6 +71,7 @@ interface StoreState {
   guardarUsuario: (usuario: UsuarioApp) => void;
   eliminarUsuario: (id: string) => void;
   setPassword: (id: string, password: string) => void;
+  guardarAsistencia: (clave: string, datos: AsistenciaMes) => void;
 }
 
 export const useStore = create<StoreState>()(
@@ -77,6 +80,7 @@ export const useStore = create<StoreState>()(
       usuarioActivo: null,
       registros: [],
       usuarios: [],
+      asistencias: {},
 
       login: (email, password) => {
         const emailLower = email.toLowerCase().trim();
@@ -138,10 +142,17 @@ export const useStore = create<StoreState>()(
         set(state => ({ usuarios: state.usuarios.filter(u => u.id !== id) })),
 
       setPassword: (id, password) => { passwords[id] = password; },
+
+      guardarAsistencia: (clave, datos) =>
+        set(state => ({ asistencias: { ...state.asistencias, [clave]: datos } })),
     }),
     {
       name: 'somacor-store-v2',
-      partialize: state => ({ registros: state.registros, usuarios: state.usuarios }),
+      partialize: state => ({
+        registros: state.registros,
+        usuarios: state.usuarios,
+        asistencias: state.asistencias,
+      }),
     }
   )
 );

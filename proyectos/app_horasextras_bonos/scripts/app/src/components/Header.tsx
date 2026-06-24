@@ -35,7 +35,7 @@ export default function Header() {
               />
             </div>
             <span className="hidden md:block text-somacor-200 text-sm border-l border-somacor-600 pl-3">
-              Horas Extras y Bonos
+              Remuneraciones
             </span>
           </div>
 

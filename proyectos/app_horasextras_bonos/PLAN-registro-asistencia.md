@@ -47,17 +47,19 @@ de sus trabajadores, mes a mes, sin que un mes pise a otro.
 [Selector de módulo]
    │  elige "Registro de Asistencia"
    ▼
-[Paso 1] Seleccionar Centro de Costo
-   │  (solo los CC asignados al usuario; jefatura/admin ven todos)
+[Paso 1] Centro de Costo + Mes y Año  (en UNA sola pantalla)
+   │  - CC: solo los asignados al usuario; jefatura/admin ven todos
+   │  - Mes y Año: define qué registro se abre/crea (ej. Mayo 2026)
    ▼
-[Paso 2] Seleccionar Mes y Año
-   │  (ej. Mayo 2026)  ← clave: define qué registro se abre/crea
-   ▼
-[Paso 3] Grilla de Asistencia del CC para ese mes/año
+[Paso 2] Grilla de Asistencia del CC para ese mes/año
    │  (tabla igual al Excel, editable, una sigla por día)
    ▼
 Guardar  →  queda persistido para ese CC + año + mes
 ```
+
+> **Navegación:** el Paso 1 junta CC + mes + año en una sola pantalla, para que el usuario no
+> navegue de más. Además, **todas las pantallas tienen un botón "Volver atrás"** (la grilla
+> vuelve a la selección; la selección vuelve al selector de módulo).
 
 **Regla central — no sobreescribir entre meses:**
 cada combinación **(centro de costo, año, mes)** es un registro independiente. El registro de
@@ -193,16 +195,17 @@ Esto asegura que **un mes no pisa a otro** y que cada celda tiene un único valo
 Las rutas actuales de `PLAN-app-horasextras-bonos.md` se mantienen. Se **agregan**:
 
 ```
-/                          → Selector de módulo (Asistencia / Horas Extras y Bonos)
-/registro-asistencia
-  /registro-asistencia/cc        → Paso 1: seleccionar centro de costo
-  /registro-asistencia/periodo   → Paso 2: seleccionar mes y año
-  /registro-asistencia/grilla    → Paso 3: grilla de asistencia (CC + mes + año)
+/                       → Selector de módulo (Asistencia / Horas Extras y Bonos)
+/horas-extras           → Dashboard de Horas Extras y Bonos (las tarjetas actuales)
+/registro-asistencia    → Módulo de asistencia (selección + grilla en la misma página)
 ```
 
-- El **Home actual** pasa a ser, o a vivir detrás de, un **selector de módulo**. Al elegir
-  "Horas Extras y Bonos" se entra al flujo ya existente; al elegir "Registro de Asistencia" se
-  entra a `/registro-asistencia/cc`.
+- El **Home actual** (las 4 tarjetas: Registrar/Consultar/Validar/Administrar) pasa a vivir en
+  `/horas-extras`. La ruta `/` pasa a ser el **selector de módulo**: al elegir "Horas Extras y
+  Bonos" entra al dashboard ya existente; al elegir "Registro de Asistencia" entra al módulo nuevo.
+- Dentro del módulo de asistencia, la selección (CC + mes + año) y la grilla son **una misma
+  pantalla con dos pasos internos**; no se usan rutas separadas para no complicar la navegación.
+- **Botón "Volver atrás" en todas las pantallas** (grilla → selección → selector de módulo).
 - Permisos: se reutiliza el esquema actual (cada usuario ve solo sus CC; jefatura/admin ven todos).
 - La asistencia **no tiene flujo de validación**: solo se registra (ver §6.2).
 
@@ -239,6 +242,18 @@ Las rutas actuales de `PLAN-app-horasextras-bonos.md` se mantienen. Se **agregan
 
 ## 9. Estado
 
-**LISTO PARA REVISAR** — Documento de planificación del módulo de Registro de Asistencia completo,
-con las decisiones ya confirmadas (§8). Falta la aprobación de Cecil/Michell para empezar a
-programar. No se ha escrito código todavía.
+**LISTO PARA REVISAR** — Módulo de Registro de Asistencia **implementado y verificado** en la app
+(staging). Pendiente la conexión a la base de datos real / Talana (hoy los datos de asistencia se
+guardan en el navegador vía `localStorage`) y completar la columna `Ingreso` con la fecha de
+ingreso real del trabajador (ver §8.1).
+
+### Lo que quedó hecho (en `scripts/app/`)
+- Selector de módulo al ingresar (`/` → `Inicio.tsx`): *Registro de Asistencia* / *Horas Extras y Bonos*.
+- Dashboard de HE y Bonos movido a `/horas-extras` (sus pantallas internas no se tocaron).
+- Módulo de asistencia (`/registro-asistencia` → `RegistroAsistencia.tsx`):
+  - Pantalla de selección con CC + mes + año en una sola vista.
+  - Grilla editable con el formato del Excel (cabecera de 3 líneas, columnas fijas, días del mes con
+    día de la semana, fines de semana resaltados y selector con las 12 siglas por celda).
+  - Guardado por `(CC + año + mes)` en el store Zustand (persistido); un mes no pisa a otro.
+  - Botón "Volver" en todas las pantallas.
+- Catálogo de siglas y helpers en `scripts/app/src/data/siglas.ts`.

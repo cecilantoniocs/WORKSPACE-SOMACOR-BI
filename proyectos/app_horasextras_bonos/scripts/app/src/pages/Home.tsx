@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { ClipboardList, Search, CheckCircle, Settings } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ClipboardList, Search, CheckCircle, Settings, ChevronLeft } from 'lucide-react';
 import { useStore } from '../store/useStore';
 
 const cards = [
@@ -39,6 +39,7 @@ const cards = [
 
 export default function Home() {
   const usuarioActivo = useStore(s => s.usuarioActivo);
+  const navigate = useNavigate();
 
   const visibles = cards.filter(c =>
     usuarioActivo && (c.roles as readonly string[]).includes(usuarioActivo.tipo)
@@ -46,9 +47,15 @@ export default function Home() {
 
   return (
     <div>
-      <div className="mb-6">
+      <div className="flex items-center gap-3 mb-1">
+        <button onClick={() => navigate('/')} className="text-gray-400 hover:text-gray-600" title="Volver al inicio">
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <span className="text-sm text-gray-400">Inicio / Horas Extras y Bonos</span>
+      </div>
+      <div className="mb-6 ml-8">
         <h1 className="text-2xl font-bold text-gray-900">
-          Bienvenido/a, {usuarioActivo?.nombre.split(' ')[0]}
+          Horas Extras y Bonos
         </h1>
         <p className="text-gray-500 mt-1">¿Qué deseas hacer hoy?</p>
       </div>

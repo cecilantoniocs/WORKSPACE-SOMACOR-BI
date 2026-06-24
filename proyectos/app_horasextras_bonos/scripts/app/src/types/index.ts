@@ -7,8 +7,18 @@ export interface Empleado {
   rut: string;
   nombre: string;
   cargo: string;
+  fechaIngreso?: string;
   centrosCosto: CentroCosto[];
 }
+
+// ---- Registro de Asistencia ----
+export interface Sigla {
+  sigla: string;
+  nombre: string;
+}
+
+// Asistencia de un mes: rut del trabajador -> (día del mes -> sigla)
+export type AsistenciaMes = Record<string, Record<number, string>>;
 
 export type TipoUsuario = 'supervisor' | 'adc' | 'jefatura' | 'gerencia' | 'admin';
 

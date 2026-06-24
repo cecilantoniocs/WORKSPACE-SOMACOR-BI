@@ -2,7 +2,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import Login from './pages/Login';
+import Inicio from './pages/Inicio';
 import Home from './pages/Home';
+import RegistroAsistencia from './pages/RegistroAsistencia';
 import Registrar from './pages/Registrar';
 import Consultar from './pages/Consultar';
 import Validar from './pages/Validar';
@@ -28,7 +30,23 @@ export default function App() {
           path="/"
           element={
             <ProtectedRoute>
+              <Layout><Inicio /></Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/horas-extras"
+          element={
+            <ProtectedRoute>
               <Layout><Home /></Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/registro-asistencia"
+          element={
+            <ProtectedRoute rolesPermitidos={['supervisor', 'adc', 'jefatura', 'gerencia', 'admin']}>
+              <Layout><RegistroAsistencia /></Layout>
             </ProtectedRoute>
           }
         />

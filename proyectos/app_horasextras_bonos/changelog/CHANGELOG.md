@@ -1,5 +1,11 @@
 ﻿# Changelog — somacor_app
 
+## 2026-06-24
+- App fusionada como "Remuneraciones": al ingresar ahora hay un selector de módulo (Registro de Asistencia / Horas Extras y Bonos). El dashboard de HE y Bonos se movió a /horas-extras (sin tocar sus pantallas internas).
+- Nuevo módulo Registro de Asistencia: pantalla de selección (CC + mes + año en una sola vista) y grilla editable con el mismo formato del Excel (cabecera de 3 líneas, columnas CC/RUT/Nombre/Cargo/Ingreso, días del mes con día de la semana, fines de semana resaltados y selector de las 12 siglas por celda).
+- Cada (CC + año + mes) se guarda por separado en el store (persistido en el navegador): el registro de un mes no pisa al de otro. Verificado: junio=30 días, mayo=31 días y vacío; persistencia OK; sin errores JS.
+- Botón "Volver" en todas las pantallas del módulo. Agregados tipos, catálogo de siglas (src/data/siglas.ts) y estado de asistencia en el store.
+
 ## 2026-06-23
 - Analizados los Excel "CCXXX - Remuneraciones" (hojas "Registro Asistencia" y "Siglas Asistencia") para entender el formato de la planilla mensual de asistencia.
 - Creado PLAN-registro-asistencia.md: documento del nuevo módulo de Registro de Asistencia que se suma a la app (ahora "App de Remuneraciones"). No se tocó PLAN-app-horasextras-bonos.md.
