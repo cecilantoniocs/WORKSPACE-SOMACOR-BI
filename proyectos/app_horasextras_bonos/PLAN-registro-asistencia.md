@@ -243,9 +243,10 @@ Las rutas actuales de `PLAN-app-horasextras-bonos.md` se mantienen. Se **agregan
 ## 9. Estado
 
 **LISTO PARA REVISAR** — Módulo de Registro de Asistencia **implementado y verificado** en la app
-(staging). Pendiente la conexión a la base de datos real / Talana (hoy los datos de asistencia se
-guardan en el navegador vía `localStorage`) y completar la columna `Ingreso` con la fecha de
-ingreso real del trabajador (ver §8.1).
+(staging). La columna `Ingreso` ya viene cargada con la fecha de ingreso real (extraída del Excel
+`Lista Empleados de somacor.xlsx` y agregada a `somacor-data.json`). Pendiente solo la conexión a
+la base de datos real / Talana (hoy los datos de asistencia se guardan en el navegador vía
+`localStorage`).
 
 ### Lo que quedó hecho (en `scripts/app/`)
 - Selector de módulo al ingresar (`/` → `Inicio.tsx`): *Registro de Asistencia* / *Horas Extras y Bonos*.
@@ -326,6 +327,6 @@ scripts/app/
 - **Valor de cada celda:** del estado `asistencias` del store, bajo la clave `CC-AAAA-MM`,
   con la forma `{ [rut]: { [día]: sigla } }`. Al guardar, se escribe esa clave; por eso un mes
   no pisa a otro.
-- **Columna "Ingreso":** hoy muestra `—` porque `somacor-data.json` aún no trae la fecha de
-  ingreso (no se extrajo del Excel original). Se completará al re-extraer empleados o al
-  conectar Talana (ver §8.1).
+- **Columna "Ingreso":** sale de `fechaIngreso` de cada empleado en `somacor-data.json`. Ese
+  campo se agregó extrayendo la "Fecha de Ingreso" del Excel `Lista Empleados de somacor.xlsx`
+  (cruzando por RUT, formato `dd-mm-aaaa`). En producción vendrá de Talana.

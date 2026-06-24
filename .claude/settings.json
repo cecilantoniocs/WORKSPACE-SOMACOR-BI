@@ -6,7 +6,10 @@
       "PowerShell($p = \\(npm root -g\\); \"global root: $p\"; Test-Path \"$p\\\\playwright\"; \\(Get-Command playwright -ErrorAction SilentlyContinue\\).Source)",
       "PowerShell($paths = @\\(\"C:\\\\Users\\\\Usuario\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\playwright\",\"C:\\\\Users\\\\Usuario\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\playwright-core\"\\); foreach\\($p in $paths\\){ \"$p -> $\\(Test-Path $p\\)\" }; \"ms-playwright browsers:\"; Get-ChildItem \"C:\\\\Users\\\\Usuario\\\\AppData\\\\Local\\\\ms-playwright\" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name)",
       "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('scripts:',JSON.stringify\\(p.scripts,null,2\\)\\); console.log\\('deps:',Object.keys\\(p.dependencies||{}\\).join\\(', '\\)\\)\")",
-      "PowerShell(cd \"c:\\\\WORKSPACE SOMACOR\\\\proyectos\\\\app_horasextras_bonos\\\\scripts\\\\app\"; node \".\\\\node_modules\\\\typescript\\\\bin\\\\tsc\" --noEmit; if \\($?\\) { \"TSC OK\" }; Start-Process -FilePath \"node\" -ArgumentList \".\\\\node_modules\\\\vite\\\\bin\\\\vite.js\",\"--port\",\"5173\" -RedirectStandardOutput \"$env:TEMP\\\\vite-asist2.log\" -RedirectStandardError \"$env:TEMP\\\\vite-asist2.err\" -WindowStyle Hidden; Start-Sleep -Seconds 4; \"server up\")"
+      "PowerShell(cd \"c:\\\\WORKSPACE SOMACOR\\\\proyectos\\\\app_horasextras_bonos\\\\scripts\\\\app\"; node \".\\\\node_modules\\\\typescript\\\\bin\\\\tsc\" --noEmit; if \\($?\\) { \"TSC OK\" }; Start-Process -FilePath \"node\" -ArgumentList \".\\\\node_modules\\\\vite\\\\bin\\\\vite.js\",\"--port\",\"5173\" -RedirectStandardOutput \"$env:TEMP\\\\vite-asist2.log\" -RedirectStandardError \"$env:TEMP\\\\vite-asist2.err\" -WindowStyle Hidden; Start-Sleep -Seconds 4; \"server up\")",
+      "Bash(node diag_ingreso.js)",
+      "Bash(node merge_ingreso.js)",
+      "PowerShell(cd \"c:\\\\WORKSPACE SOMACOR\\\\proyectos\\\\app_horasextras_bonos\\\\scripts\\\\app\"; Start-Process -FilePath \"node\" -ArgumentList \".\\\\node_modules\\\\vite\\\\bin\\\\vite.js\",\"--port\",\"5173\" -RedirectStandardOutput \"$env:TEMP\\\\vite-ing.log\" -RedirectStandardError \"$env:TEMP\\\\vite-ing.err\" -WindowStyle Hidden; Start-Sleep -Seconds 4; \"server up\")"
     ]
   }
 }

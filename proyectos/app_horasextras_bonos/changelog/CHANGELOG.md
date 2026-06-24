@@ -1,6 +1,7 @@
 ﻿# Changelog — somacor_app
 
 ## 2026-06-24
+- Agregada la columna "Fecha de Ingreso" a somacor-data.json (campo fechaIngreso), extraída del Excel "Lista Empleados de somacor.xlsx" cruzando por RUT (1068/1068, formato dd-mm-aaaa). Ahora la grilla de asistencia muestra la fecha de ingreso real en vez de "—".
 - Registro Asistencia: las opciones de siglas del selector ahora se muestran en color fuerte #282b35 y en negrita, para que se vea claro qué sigla se está eligiendo.
 - PLAN-registro-asistencia.md: agregada la sección "Estructura del frontend" (árbol de archivos, cómo ejecutar la app y de dónde sale cada dato de la grilla).
 - App fusionada como "Remuneraciones": al ingresar ahora hay un selector de módulo (Registro de Asistencia / Horas Extras y Bonos). El dashboard de HE y Bonos se movió a /horas-extras (sin tocar sus pantallas internas).
