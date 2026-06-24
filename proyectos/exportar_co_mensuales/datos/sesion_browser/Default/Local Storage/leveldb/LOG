@@ -1,0 +1,5 @@
+2026/06/24-13:27:52.503 1cfc Creating DB c:\WORKSPACE SOMACOR\proyectos\exportar_co_mensuales\datos\sesion_browser\Default\Local Storage\leveldb since it was missing.
+2026/06/24-13:27:52.542 1cfc Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_mensuales\datos\sesion_browser\Default\Local Storage\leveldb/MANIFEST-000001
+2026/06/24-13:31:18.592 1aa8 Level-0 table #5: started
+2026/06/24-13:31:18.607 1aa8 Level-0 table #5: 104988 bytes OK
+2026/06/24-13:31:18.614 1aa8 Delete type=0 #3

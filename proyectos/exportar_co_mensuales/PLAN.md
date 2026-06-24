@@ -1,37 +1,63 @@
-# exportar_co_mensuales
+# Exportar C.O - Mensuales
 
 ## Objetivo
-Exportar de forma automática los CO (centros de operación / órdenes de compra) mensuales
-a un formato de salida (Excel/CSV) listo para revisar o cargar en otro sistema.
-
-> ⚠️ Pendiente confirmar con el usuario el detalle exacto de qué significa "CO" y de dónde
-> salen los datos. Ver sección **Notas / pendientes**.
+Exportar todos los reportes del workspace "C.O - Mensuales" de Microsoft Fabric/PowerBI
+a formato PDF, guardándolos en la carpeta `salidas/` con el nombre exacto del reporte.
 
 ## Alcance
-**Incluye:**
-- Leer los insumos mensuales desde `datos/`.
-- Procesarlos y generar el export mensual en `salidas/`.
+- **Incluye:** exportar todos los reportes del workspace a PDF, controlando el navegador
+  Chrome con Playwright (hace los mismos clics que una persona: Exportar > PDF > Exportar).
+- **No incluye:** ejecución completamente automática sin intervención humana. El usuario
+  debe correr el script manualmente; el navegador queda con sesión guardada para no pedir
+  login cada vez.
 
-**No incluye (por ahora):**
-- Subir los resultados a otro sistema de forma automática.
-- Conexión directa a base de datos (a definir).
+## Por qué Playwright y no la API de PowerBI
+La API oficial exige capacidad **Premium/Fabric dedicada**. El workspace está en capacidad
+**Pro compartida**, así que la API rechaza la exportación. Por eso se usa Playwright,
+que usa la interfaz normal de PowerBI y no tiene restricción de licencia.
 
 ## Estructura de carpetas
-- `datos/`     → archivos de entrada del mes (Excel, CSV, insumos que llegan).
-- `scripts/`   → código que hace la exportación (.py, .ps1).
-- `salidas/`   → resultados generados (el export mensual final).
-- `changelog/` → `CHANGELOG.md` con el registro de todos los cambios por fecha.
+```
+exportar_co_mensuales/
+├── PLAN.md                 <- este archivo (documentación del proyecto)
+├── GUIA_PLAYWRIGHT.md      <- guía de uso paso a paso para el usuario
+├── datos/
+│   └── sesion_browser/     <- sesión guardada de Chrome (login de PowerBI)
+├── scripts/
+│   └── exportar_reportes_playwright.py  <- SCRIPT PRINCIPAL (el que se usa)
+├── salidas/                <- aquí se guardan los PDF exportados
+└── changelog/
+    └── CHANGELOG.md
+```
 
 ## Requisitos
-- Por definir (Python + librerías, o PowerShell). Se completa cuando se confirme el flujo.
+- Windows con Python 3.10 o superior (marcado "Add to PATH" al instalar)
+- Librería `playwright` (`pip install playwright` y luego `playwright install chromium`)
+- Cuenta Microsoft con acceso al workspace "C.O - Mensuales"
+- Acceso al workspace (ID: 8d1feccb-ce91-445f-bca4-bf45815f0e24)
+- Conexión a internet
 
 ## Cómo usarlo
-- Por definir. Se documentará el paso a paso cuando exista el primer script.
+1. Abrir CMD o PowerShell
+2. Ejecutar:
+   ```
+   python "c:\WORKSPACE SOMACOR\proyectos\exportar_co_mensuales\scripts\exportar_reportes_playwright.py"
+   ```
+3. Se abre Chrome. Si pide login, ingresar la cuenta Microsoft (solo la primera vez).
+4. El script busca todos los reportes, los exporta a PDF y los guarda en `salidas/`.
+5. Al terminar muestra un resumen.
+
+> La guía detallada paso a paso está en `GUIA_PLAYWRIGHT.md`.
 
 ## Estado
-En progreso — carpeta y documentación inicial creadas. Falta confirmar detalles del flujo.
+LISTO PARA REVISAR — el script está armado igual que el de C.O Semanales, apuntando al
+workspace "C.O - Mensuales". Falta la primera corrida de prueba para confirmar que exporta
+bien (la primera vez pedirá login de Microsoft en el navegador).
 
 ## Notas / pendientes
-- Confirmar qué significa "CO" exactamente (centro de operación, orden de compra, etc.).
-- Confirmar el formato de los insumos de entrada y el formato de salida esperado.
-- Confirmar periodicidad y de dónde llegan los datos cada mes.
+- Los PDF se guardan con el nombre exacto del reporte en PowerBI (sin fecha, con espacios).
+  Ejemplo: `Control Operacional 360 Mensual - ANGLO WEST WALL.pdf`.
+- Como no llevan fecha, al correr el script de nuevo los archivos se sobreescriben.
+- Microsoft Fabric limita a 20 reportes abiertos por sesión. El script cierra y reabre la
+  pestaña cada 15 reportes para liberar ese contador y seguir desde donde iba.
+- Workspace ID fijo en el script: `8d1feccb-ce91-445f-bca4-bf45815f0e24`
