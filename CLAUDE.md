@@ -132,10 +132,31 @@ workspace-somacor-bi/
 
 ---
 
+## 📱 Stack estándar para APLICACIONES (obligatorio)
+
+Cuando lo que se construye es una **aplicación** (no un script suelto), usa SIEMPRE el
+stack oficial de Somacor. NO elijas otra tecnología por tu cuenta.
+
+- **Frontend:** React 19 + Vite + TypeScript + Tailwind, como **PWA** (mobile-first).
+- **Backend:** Python + **FastAPI** (acá viven datos, lógica y seguridad).
+- **Auth:** Entra ID / MSAL (cuenta corporativa). Prohibido login falso o claves
+  hardcodeadas.
+- **Datos:** MySQL Azure o SharePoint según el caso, **siempre detrás del backend**.
+  El frontend nunca se pega directo a los datos ni guarda datos productivos en
+  `localStorage`.
+- **Estructura:** `proyectos/<nombre_app>/` con `frontend/` (React) y `backend/`
+  (FastAPI), más `PLAN.md` y `changelog/`.
+
+👉 **El detalle completo está en [`STACK.md`](STACK.md). Léelo antes de empezar una app**
+y arma la estructura según ese documento.
+
+---
+
 ## 1. Qué NO puedes tocar (lista negra)
 
 - **NO edites** estos archivos sin permiso explícito de Cecil:
-  `auto-sync.ps1`, `.gitignore`, `SETUP-MICHELL.md`, `README.md` y este `CLAUDE.md`.
+  `auto-sync.ps1`, `.gitignore`, `SETUP-MICHELL.md`, `README.md`, `STACK.md` y este
+  `CLAUDE.md`.
 - **NO borres** las carpetas de otros proyectos dentro de `proyectos/`. Cada quien trabaja
   en lo suyo; no toques proyectos ajenos salvo que te lo pidan.
 
