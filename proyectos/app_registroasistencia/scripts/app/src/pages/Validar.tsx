@@ -1,28 +1,61 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, CheckCircle, XCircle, Download } from 'lucide-react';
+import { ChevronLeft, CheckCircle, XCircle, Download, Filter } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import { useStore } from '../store/useStore';
 import type { Registro } from '../types';
 
+function badge(estado: string) {
+  if (estado === 'validado') return <span className="badge-validado">Validado</span>;
+  if (estado === 'rechazado') return <span className="badge-rechazado">Rechazado</span>;
+  return <span className="badge-pendiente">Pendiente</span>;
+}
+
 export default function Validar() {
+  const usuarioActivo = useStore(s => s.usuarioActivo);
   const registros = useStore(s => s.registros);
   const validarRegistros = useStore(s => s.validarRegistros);
   const navigate = useNavigate();
 
+  const [filtroCc, setFiltroCc] = useState('');
+  const [filtroTipo, setFiltroTipo] = useState('');
+  const [filtroEstado, setFiltroEstado] = useState('');
+  const [fechaDesde, setFechaDesde] = useState('');
+  const [fechaHasta, setFechaHasta] = useState('');
   const [seleccionados, setSeleccionados] = useState<string[]>([]);
   const [confirm, setConfirm] = useState<{ accion: 'validado' | 'rechazado'; ids: string[] } | null>(null);
 
-  const pendientes = useMemo(
-    () => registros.filter(r => r.estado === 'pendiente').sort((a, b) => b.fechaRegistro.localeCompare(a.fechaRegistro)),
-    [registros]
+  const puedeVerTodo = usuarioActivo?.verTodosLosCc || usuarioActivo?.tipo === 'admin';
+
+  const registrosFiltrados = useMemo(() => {
+    return registros.filter(r => {
+      if (!puedeVerTodo && usuarioActivo) {
+        if (!usuarioActivo.centrosCosto.includes(r.codigoCc)) return false;
+      }
+      if (filtroCc && !r.codigoCc.includes(filtroCc) && !r.nombreCc.toLowerCase().includes(filtroCc.toLowerCase())) return false;
+      if (filtroTipo && r.tipo !== filtroTipo) return false;
+      if (filtroEstado && r.estado !== filtroEstado) return false;
+      if (fechaDesde && r.fecha < fechaDesde) return false;
+      if (fechaHasta && r.fecha > fechaHasta) return false;
+      return true;
+    }).sort((a, b) => b.fechaRegistro.localeCompare(a.fechaRegistro));
+  }, [registros, puedeVerTodo, usuarioActivo, filtroCc, filtroTipo, filtroEstado, fechaDesde, fechaHasta]);
+
+  // Solo se pueden validar/rechazar los pendientes.
+  const pendientesFiltrados = registrosFiltrados.filter(r => r.estado === 'pendiente');
+  const pendientesSel = seleccionados.filter(id =>
+    registros.find(x => x.id === id)?.estado === 'pendiente'
   );
 
   const toggleSel = (id: string) =>
     setSeleccionados(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
 
   const toggleTodos = () =>
-    setSeleccionados(prev => prev.length === pendientes.length ? [] : pendientes.map(r => r.id));
+    setSeleccionados(prev =>
+      prev.length === pendientesFiltrados.length && pendientesFiltrados.length > 0
+        ? []
+        : pendientesFiltrados.map(r => r.id)
+    );
 
   const ejecutarAccion = () => {
     if (!confirm) return;
@@ -32,7 +65,7 @@ export default function Validar() {
   };
 
   const exportar = () => {
-    const filas = pendientes.map(r => ({
+    const filas = registrosFiltrados.map(r => ({
       'Fecha': r.fecha,
       'Tipo': r.tipo === 'horas_extras' ? 'Horas Extras' : 'Bono',
       'CC Código': r.codigoCc,
@@ -44,11 +77,12 @@ export default function Validar() {
         ? { 'Horas': (r as Extract<Registro, { tipo: 'horas_extras' }>).cantidadHe }
         : { 'Monto': (r as Extract<Registro, { tipo: 'bono' }>).montoBono }),
       'Motivo': r.motivo,
+      'Estado': r.estado,
       'Registrado Por': r.nombreRegistrador,
     }));
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(filas), 'Pendientes');
-    XLSX.writeFile(wb, `somacor_pendientes_${new Date().toISOString().slice(0, 10)}.xlsx`);
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(filas), 'Registros');
+    XLSX.writeFile(wb, `somacor_validar_${new Date().toISOString().slice(0, 10)}.xlsx`);
   };
 
   return (
@@ -60,37 +94,60 @@ export default function Validar() {
         <h1 className="text-xl font-bold text-gray-900">Validar Registros</h1>
       </div>
 
+      {/* Filtros (igual que Consultar) */}
+      <div className="card mb-4">
+        <div className="flex items-center gap-2 mb-3">
+          <Filter className="w-4 h-4 text-gray-400" />
+          <span className="text-sm font-medium text-gray-700">Filtros</span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <input className="input" placeholder="Centro de costo" value={filtroCc} onChange={e => setFiltroCc(e.target.value)} />
+          <select className="input" value={filtroTipo} onChange={e => setFiltroTipo(e.target.value)}>
+            <option value="">Todos los tipos</option>
+            <option value="horas_extras">Horas Extras</option>
+            <option value="bono">Bono</option>
+          </select>
+          <select className="input" value={filtroEstado} onChange={e => setFiltroEstado(e.target.value)}>
+            <option value="">Todos los estados</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="validado">Validado</option>
+            <option value="rechazado">Rechazado</option>
+          </select>
+          <input type="date" className="input" value={fechaDesde} onChange={e => setFechaDesde(e.target.value)} />
+          <input type="date" className="input" value={fechaHasta} onChange={e => setFechaHasta(e.target.value)} />
+        </div>
+      </div>
+
       <div className="card">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-sm text-gray-500">{pendientes.length} pendiente(s)</span>
+          <span className="text-sm text-gray-500">
+            {registrosFiltrados.length} registro(s) · {pendientesFiltrados.length} pendiente(s)
+          </span>
           <div className="flex gap-2">
-            {seleccionados.length > 0 && (
+            {pendientesSel.length > 0 && (
               <>
                 <button
                   className="btn-success text-sm py-1.5"
-                  onClick={() => setConfirm({ accion: 'validado', ids: seleccionados })}
+                  onClick={() => setConfirm({ accion: 'validado', ids: pendientesSel })}
                 >
-                  <CheckCircle className="w-4 h-4 inline mr-1" /> Validar ({seleccionados.length})
+                  <CheckCircle className="w-4 h-4 inline mr-1" /> Validar ({pendientesSel.length})
                 </button>
                 <button
                   className="btn-danger text-sm py-1.5"
-                  onClick={() => setConfirm({ accion: 'rechazado', ids: seleccionados })}
+                  onClick={() => setConfirm({ accion: 'rechazado', ids: pendientesSel })}
                 >
-                  <XCircle className="w-4 h-4 inline mr-1" /> Rechazar ({seleccionados.length})
+                  <XCircle className="w-4 h-4 inline mr-1" /> Rechazar ({pendientesSel.length})
                 </button>
               </>
             )}
             <button className="btn-secondary text-sm py-1.5" onClick={exportar}>
-              <Download className="w-4 h-4 inline mr-1" /> Exportar
+              <Download className="w-4 h-4 inline mr-1" /> Exportar Excel
             </button>
           </div>
         </div>
 
-        {pendientes.length === 0 ? (
-          <div className="text-center py-12">
-            <CheckCircle className="w-12 h-12 text-green-300 mx-auto mb-3" />
-            <p className="text-gray-400">No hay registros pendientes de validación.</p>
-          </div>
+        {registrosFiltrados.length === 0 ? (
+          <p className="text-center text-gray-400 py-10">No hay registros que mostrar.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -99,8 +156,9 @@ export default function Validar() {
                   <th className="pb-2 pr-3">
                     <input
                       type="checkbox"
-                      checked={seleccionados.length === pendientes.length && pendientes.length > 0}
+                      checked={seleccionados.length === pendientesFiltrados.length && pendientesFiltrados.length > 0}
                       onChange={toggleTodos}
+                      title="Seleccionar todos los pendientes"
                     />
                   </th>
                   <th className="pb-2 pr-3 text-gray-500 font-medium">Fecha</th>
@@ -109,32 +167,58 @@ export default function Validar() {
                   <th className="pb-2 pr-3 text-gray-500 font-medium">Trabajador</th>
                   <th className="pb-2 pr-3 text-gray-500 font-medium">Cantidad</th>
                   <th className="pb-2 pr-3 text-gray-500 font-medium">Motivo</th>
-                  <th className="pb-2 text-gray-500 font-medium">Registró</th>
+                  <th className="pb-2 pr-3 text-gray-500 font-medium">Estado</th>
+                  <th className="pb-2 text-gray-500 font-medium">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
-                {pendientes.map(r => (
-                  <tr key={r.id} className={`hover:bg-gray-50 ${seleccionados.includes(r.id) ? 'bg-somacor-50' : ''}`}>
-                    <td className="py-2.5 pr-3">
-                      <input
-                        type="checkbox"
-                        checked={seleccionados.includes(r.id)}
-                        onChange={() => toggleSel(r.id)}
-                      />
-                    </td>
-                    <td className="py-2.5 pr-3 text-gray-600">{r.fecha}</td>
-                    <td className="py-2.5 pr-3">{r.tipo === 'horas_extras' ? 'HH.EE.' : 'Bono'}</td>
-                    <td className="py-2.5 pr-3 text-xs text-gray-400">{r.codigoCc}</td>
-                    <td className="py-2.5 pr-3 text-gray-800">{r.nombreEmpleado}</td>
-                    <td className="py-2.5 pr-3 text-gray-600">
-                      {r.tipo === 'horas_extras'
-                        ? `${(r as Extract<Registro, { tipo: 'horas_extras' }>).cantidadHe} hr`
-                        : `$${(r as Extract<Registro, { tipo: 'bono' }>).montoBono.toLocaleString('es-CL')}`}
-                    </td>
-                    <td className="py-2.5 pr-3 text-gray-500 max-w-[160px] truncate">{r.motivo}</td>
-                    <td className="py-2.5 text-xs text-gray-400">{r.nombreRegistrador}</td>
-                  </tr>
-                ))}
+                {registrosFiltrados.map(r => {
+                  const esPendiente = r.estado === 'pendiente';
+                  return (
+                    <tr key={r.id} className={`hover:bg-gray-50 ${seleccionados.includes(r.id) ? 'bg-somacor-50' : ''}`}>
+                      <td className="py-2.5 pr-3">
+                        <input
+                          type="checkbox"
+                          disabled={!esPendiente}
+                          checked={seleccionados.includes(r.id)}
+                          onChange={() => toggleSel(r.id)}
+                          title={esPendiente ? '' : 'Solo se pueden seleccionar pendientes'}
+                        />
+                      </td>
+                      <td className="py-2.5 pr-3 text-gray-600">{r.fecha}</td>
+                      <td className="py-2.5 pr-3 text-gray-800">{r.tipo === 'horas_extras' ? 'HH.EE.' : 'Bono'}</td>
+                      <td className="py-2.5 pr-3 text-xs text-gray-400">{r.codigoCc}</td>
+                      <td className="py-2.5 pr-3 text-gray-800">{r.nombreEmpleado}</td>
+                      <td className="py-2.5 pr-3 text-gray-600">
+                        {r.tipo === 'horas_extras'
+                          ? `${(r as Extract<Registro, { tipo: 'horas_extras' }>).cantidadHe} hr`
+                          : `$${(r as Extract<Registro, { tipo: 'bono' }>).montoBono.toLocaleString('es-CL')}`}
+                      </td>
+                      <td className="py-2.5 pr-3 text-gray-500 max-w-[160px] truncate" title={r.motivo}>{r.motivo}</td>
+                      <td className="py-2.5 pr-3">{badge(r.estado)}</td>
+                      <td className="py-2.5">
+                        {esPendiente ? (
+                          <div className="flex gap-1.5">
+                            <button
+                              className="text-xs font-medium px-2 py-1 rounded-md bg-teal-50 text-brand-teal hover:bg-teal-100 transition-colors"
+                              onClick={() => setConfirm({ accion: 'validado', ids: [r.id] })}
+                            >
+                              <CheckCircle className="w-3.5 h-3.5 inline mr-1" />Validar
+                            </button>
+                            <button
+                              className="text-xs font-medium px-2 py-1 rounded-md bg-red-50 text-brand-red hover:bg-red-100 transition-colors"
+                              onClick={() => setConfirm({ accion: 'rechazado', ids: [r.id] })}
+                            >
+                              <XCircle className="w-3.5 h-3.5 inline mr-1" />Rechazar
+                            </button>
+                          </div>
+                        ) : (
+                          <span className="text-xs text-gray-400">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

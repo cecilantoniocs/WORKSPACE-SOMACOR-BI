@@ -4,6 +4,8 @@
 - Login: el subtítulo bajo el logo cambió de "Registro de Horas Extras y Bonos" a "App Remuneraciones".
 - Registro Asistencia (selección de período): se quitó el selector de año; ahora solo se elige el mes y por defecto aparece el mes actual (el año queda fijo al año actual).
 - Registro Asistencia (grilla): las siglas usan los colores oficiales SOMACOR — verde #00a651 (TG/TO/HA/T4X3), gris #7f7f7f (DESC/PSGS), naranjo #ff9900 (VAC), amarillo #ffff00 con texto oscuro (LIC/PCGS), rojo #ff0000 (F/DESV) y gris oscuro #333333 (NI), tanto en la leyenda como en las celdas.
+- Registro Asistencia (grilla): DESV ahora se muestra con fondo blanco y letra roja #ff0000 (antes fondo rojo).
+- Registro Asistencia (grilla): las columnas CC, RUT, Nombre, Cargo e Ingreso quedan congeladas (sticky); al desplazar la tabla para ver los últimos días del mes, los datos del trabajador no se pierden (como "Inmovilizar paneles" de Excel).
 
 ## 2026-06-25
 - Renombrada la carpeta del proyecto de "app_horasextras_bonos" a "app_registroasistencia".
