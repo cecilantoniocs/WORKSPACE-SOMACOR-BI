@@ -38,7 +38,7 @@ export default function Login() {
             />
           </div>
           <h1 className="text-3xl font-bold text-white">SOMACOR</h1>
-          <p className="text-white mt-1 text-base font-medium">Registro de Horas Extras y Bonos</p>
+          <p className="text-white mt-1 text-base font-medium">App Remuneraciones</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-2xl p-8">

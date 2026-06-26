@@ -1,5 +1,10 @@
 ﻿# Changelog — somacor_app
 
+## 2026-06-26
+- Login: el subtítulo bajo el logo cambió de "Registro de Horas Extras y Bonos" a "App Remuneraciones".
+- Registro Asistencia (selección de período): se quitó el selector de año; ahora solo se elige el mes y por defecto aparece el mes actual (el año queda fijo al año actual).
+- Registro Asistencia (grilla): las siglas usan los colores oficiales SOMACOR — verde #00a651 (TG/TO/HA/T4X3), gris #7f7f7f (DESC/PSGS), naranjo #ff9900 (VAC), amarillo #ffff00 con texto oscuro (LIC/PCGS), rojo #ff0000 (F/DESV) y gris oscuro #333333 (NI), tanto en la leyenda como en las celdas.
+
 ## 2026-06-25
 - Renombrada la carpeta del proyecto de "app_horasextras_bonos" a "app_registroasistencia".
 - Unificada la documentación: creado un único PLAN-remuneraciones.md que junta los dos módulos (Registro de Asistencia + Horas Extras y Bonos) entendiendo que ahora es una sola app. Eliminados los antiguos PLAN-app-horasextras-bonos.md y PLAN-registro-asistencia.md.

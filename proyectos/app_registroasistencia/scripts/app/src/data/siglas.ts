@@ -17,21 +17,22 @@ export const SIGLAS: Sigla[] = [
   { sigla: 'NI', nombre: 'Nuevo Ingreso' },
 ];
 
-// Color de fondo de la celda según la sigla, para leer rápido la grilla.
-// (clases de Tailwind)
-export const SIGLA_COLOR: Record<string, string> = {
-  TG:   'bg-somacor-100 text-somacor-900',
-  TO:   'bg-blue-100 text-blue-800',
-  HA:   'bg-indigo-100 text-indigo-800',
-  T4X3: 'bg-cyan-100 text-cyan-800',
-  DESC: 'bg-gray-100 text-gray-500',
-  VAC:  'bg-teal-100 text-teal-800',
-  LIC:  'bg-amber-100 text-amber-800',
-  F:    'bg-red-100 text-red-700',
-  PCGS: 'bg-green-100 text-green-800',
-  PSGS: 'bg-orange-100 text-orange-800',
-  DESV: 'bg-rose-200 text-rose-800',
-  NI:   'bg-lime-100 text-lime-800',
+// Color de fondo (bg) y de texto (text) de cada sigla, para leer rápido la grilla.
+// Colores definidos por SOMACOR. El color de texto se elige para que se lea bien
+// sobre el fondo (oscuro sobre amarillo, blanco sobre los demás).
+export const SIGLA_COLOR: Record<string, { bg: string; text: string }> = {
+  TG:   { bg: '#00a651', text: '#ffffff' },
+  TO:   { bg: '#00a651', text: '#ffffff' },
+  HA:   { bg: '#00a651', text: '#ffffff' },
+  T4X3: { bg: '#00a651', text: '#ffffff' },
+  DESC: { bg: '#7f7f7f', text: '#ffffff' },
+  PSGS: { bg: '#7f7f7f', text: '#ffffff' },
+  VAC:  { bg: '#ff9900', text: '#ffffff' },
+  LIC:  { bg: '#ffff00', text: '#333333' },
+  PCGS: { bg: '#ffff00', text: '#333333' },
+  F:    { bg: '#ff0000', text: '#ffffff' },
+  DESV: { bg: '#ffffff', text: '#ff0000' },
+  NI:   { bg: '#333333', text: '#ffffff' },
 };
 
 export const MESES = [

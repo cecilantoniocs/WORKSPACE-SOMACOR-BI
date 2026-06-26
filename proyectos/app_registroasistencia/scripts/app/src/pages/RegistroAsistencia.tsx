@@ -15,7 +15,6 @@ const data = dataJson as SomacorData;
 type Paso = 'seleccion' | 'grilla';
 
 const ANIO_ACTUAL = new Date().getFullYear();
-const ANIOS = [ANIO_ACTUAL - 1, ANIO_ACTUAL, ANIO_ACTUAL + 1];
 
 // Cantidad de días reales del mes (mes: 1-12).
 function diasDelMes(anio: number, mes: number): number {
@@ -27,6 +26,12 @@ function diaSemana(anio: number, mes: number, dia: number): number {
   return new Date(anio, mes - 1, dia).getDay();
 }
 
+// Anchos (px) de las 5 columnas fijas, en orden: CC, RUT, Nombre, Cargo, Ingreso.
+// Sirven para "congelarlas" (quedan quietas al desplazar la tabla horizontalmente).
+const ANCHO_FIJAS = [48, 104, 200, 150, 96];
+const leftFija = (i: number) => ANCHO_FIJAS.slice(0, i).reduce((a, b) => a + b, 0);
+const ANCHO_FIJAS_TOTAL = ANCHO_FIJAS.reduce((a, b) => a + b, 0);
+
 export default function RegistroAsistencia() {
   const usuarioActivo = useStore(s => s.usuarioActivo);
   const asistencias = useStore(s => s.asistencias);
@@ -35,8 +40,9 @@ export default function RegistroAsistencia() {
 
   const [paso, setPaso] = useState<Paso>('seleccion');
   const [ccSeleccionado, setCcSeleccionado] = useState<CentroCosto | null>(null);
+  // Mes por defecto = mes actual. El año se fija al año actual (no se pregunta).
   const [mes, setMes] = useState<number>(new Date().getMonth() + 1);
-  const [anio, setAnio] = useState<number>(ANIO_ACTUAL);
+  const anio = ANIO_ACTUAL;
 
   // Datos editables de la grilla: rut -> { día -> sigla }
   const [grilla, setGrilla] = useState<AsistenciaMes>({});
@@ -98,26 +104,18 @@ export default function RegistroAsistencia() {
         <div className="card max-w-3xl">
           <h2 className="text-lg font-semibold text-gray-800 mb-1">Selecciona el período</h2>
           <p className="text-sm text-gray-500 mb-5">
-            Elige el centro de costo, el mes y el año. Cada mes se guarda por separado: el registro
+            Elige el centro de costo y el mes. Cada mes se guarda por separado: el registro
             de un mes nunca pisa al de otro.
           </p>
 
-          {/* Mes y Año */}
-          <div className="grid grid-cols-2 gap-3 mb-5 max-w-md">
-            <div>
-              <label className="label">Mes</label>
-              <select className="input" value={mes} onChange={e => setMes(Number(e.target.value))}>
-                {MESES.map((m, i) => (
-                  <option key={i} value={i + 1}>{m}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="label">Año</label>
-              <select className="input" value={anio} onChange={e => setAnio(Number(e.target.value))}>
-                {ANIOS.map(a => <option key={a} value={a}>{a}</option>)}
-              </select>
-            </div>
+          {/* Mes */}
+          <div className="mb-5 max-w-[220px]">
+            <label className="label">Mes ({anio})</label>
+            <select className="input" value={mes} onChange={e => setMes(Number(e.target.value))}>
+              {MESES.map((m, i) => (
+                <option key={i} value={i + 1}>{m}</option>
+              ))}
+            </select>
           </div>
 
           {/* Centro de costo */}
@@ -193,15 +191,19 @@ export default function RegistroAsistencia() {
 
       {/* Leyenda de siglas */}
       <div className="flex flex-wrap gap-1.5 mb-3">
-        {SIGLAS.map(s => (
-          <span
-            key={s.sigla}
-            className={`text-[11px] px-2 py-0.5 rounded ${SIGLA_COLOR[s.sigla] ?? 'bg-gray-100'}`}
-            title={s.nombre}
-          >
-            <span className="font-bold">{s.sigla}</span> · {s.nombre}
-          </span>
-        ))}
+        {SIGLAS.map(s => {
+          const c = SIGLA_COLOR[s.sigla];
+          return (
+            <span
+              key={s.sigla}
+              className="text-[11px] px-2 py-0.5 rounded border border-gray-200"
+              style={{ backgroundColor: c?.bg ?? '#e5e7eb', color: c?.text ?? '#333333' }}
+              title={s.nombre}
+            >
+              <span className="font-bold">{s.sigla}</span> · {s.nombre}
+            </span>
+          );
+        })}
       </div>
 
       {empleadosDelCc.length === 0 ? (
@@ -214,7 +216,11 @@ export default function RegistroAsistencia() {
             <thead>
               {/* Fila día de la semana */}
               <tr>
-                <th colSpan={5} className="sticky left-0 z-20 bg-gray-50 border-b border-r border-gray-200" />
+                <th
+                  colSpan={5}
+                  className="sticky left-0 z-30 bg-gray-50 border-b border-r border-gray-200"
+                  style={{ minWidth: ANCHO_FIJAS_TOTAL, width: ANCHO_FIJAS_TOTAL }}
+                />
                 {listaDias.map(d => {
                   const ds = diaSemana(anio, mes, d);
                   const finde = ds === 0 || ds === 6;
@@ -230,13 +236,17 @@ export default function RegistroAsistencia() {
                   );
                 })}
               </tr>
-              {/* Fila encabezados de columnas */}
+              {/* Fila encabezados de columnas (las 5 primeras quedan congeladas) */}
               <tr className="bg-somacor-800 text-white">
-                <th className="sticky left-0 z-20 bg-somacor-800 px-2 py-2 text-left border-r border-somacor-700">CC</th>
-                <th className="px-2 py-2 text-left">RUT</th>
-                <th className="px-2 py-2 text-left min-w-[180px]">Nombre</th>
-                <th className="px-2 py-2 text-left min-w-[130px]">Cargo</th>
-                <th className="px-2 py-2 text-left border-r border-somacor-700 min-w-[90px]">Ingreso</th>
+                {['CC', 'RUT', 'Nombre', 'Cargo', 'Ingreso'].map((titulo, i) => (
+                  <th
+                    key={titulo}
+                    className={`sticky z-30 bg-somacor-800 px-2 py-2 text-left ${i === 4 ? 'border-r border-somacor-700' : ''}`}
+                    style={{ left: leftFija(i), minWidth: ANCHO_FIJAS[i], width: ANCHO_FIJAS[i] }}
+                  >
+                    {titulo}
+                  </th>
+                ))}
                 {listaDias.map(d => {
                   const ds = diaSemana(anio, mes, d);
                   const finde = ds === 0 || ds === 6;
@@ -249,27 +259,40 @@ export default function RegistroAsistencia() {
               </tr>
             </thead>
             <tbody>
-              {empleadosDelCc.map((emp, idx) => (
-                <tr key={emp.rut} className={idx % 2 ? 'bg-gray-50/50' : 'bg-white'}>
-                  <td className="sticky left-0 z-10 px-2 py-1 border-r border-gray-200 font-mono text-gray-400 text-[11px] bg-inherit">
+              {empleadosDelCc.map((emp, idx) => {
+                const bgFila = idx % 2 ? '#f9fafb' : '#ffffff';
+                // Estilo común de las celdas fijas (congeladas): sticky + fondo sólido
+                const fija = (i: number) => ({
+                  position: 'sticky' as const,
+                  left: leftFija(i),
+                  zIndex: 20,
+                  minWidth: ANCHO_FIJAS[i],
+                  width: ANCHO_FIJAS[i],
+                  backgroundColor: bgFila,
+                });
+                return (
+                <tr key={emp.rut}>
+                  <td className="px-2 py-1 border-r border-gray-200 font-mono text-gray-400 text-[11px]" style={fija(0)}>
                     {ccSeleccionado?.codigo}
                   </td>
-                  <td className="px-2 py-1 whitespace-nowrap text-gray-500">{emp.rut}</td>
-                  <td className="px-2 py-1 whitespace-nowrap font-medium text-gray-800">{emp.nombre}</td>
-                  <td className="px-2 py-1 whitespace-nowrap text-gray-500">{emp.cargo}</td>
-                  <td className="px-2 py-1 whitespace-nowrap text-gray-500 border-r border-gray-200">
+                  <td className="px-2 py-1 whitespace-nowrap text-gray-500" style={fija(1)}>{emp.rut}</td>
+                  <td className="px-2 py-1 whitespace-nowrap font-medium text-gray-800 overflow-hidden text-ellipsis" style={fija(2)}>{emp.nombre}</td>
+                  <td className="px-2 py-1 whitespace-nowrap text-gray-500 overflow-hidden text-ellipsis" style={fija(3)}>{emp.cargo}</td>
+                  <td className="px-2 py-1 whitespace-nowrap text-gray-500 border-r border-gray-200" style={fija(4)}>
                     {emp.fechaIngreso ?? '—'}
                   </td>
                   {listaDias.map(d => {
                     const valor = grilla[emp.rut]?.[d] ?? '';
+                    const c = valor ? SIGLA_COLOR[valor] : undefined;
                     return (
                       <td key={d} className="p-0 border-l border-gray-100">
                         <select
                           value={valor}
                           onChange={e => setCelda(emp.rut, d, e.target.value)}
-                          className={`w-12 h-8 text-center text-[11px] font-semibold border-0 focus:ring-1 focus:ring-somacor-800 cursor-pointer ${
-                            valor ? SIGLA_COLOR[valor] ?? '' : 'text-gray-300'
-                          }`}
+                          className="w-12 h-8 text-center text-[11px] font-semibold border-0 focus:ring-1 focus:ring-somacor-800 cursor-pointer"
+                          style={c
+                            ? { backgroundColor: c.bg, color: c.text }
+                            : { color: '#d1d5db' }}
                           title={SIGLAS.find(s => s.sigla === valor)?.nombre ?? 'Sin registrar'}
                         >
                           <option value="" style={{ color: '#282b35', fontWeight: 700 }}>·</option>
@@ -288,7 +311,8 @@ export default function RegistroAsistencia() {
                     );
                   })}
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </div>
