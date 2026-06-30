@@ -1,3 +1,83 @@
-2026/06/30-09:06:23.542 4964 Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Session Storage/MANIFEST-000001
-2026/06/30-09:06:23.574 4964 Recovering log #192
-2026/06/30-09:06:23.578 4964 Reusing old log c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Session Storage/000192.log 
+2026/06/30-09:41:35.254 1df8 Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\Session Storage/MANIFEST-000001
+2026/06/30-09:41:35.279 1df8 Recovering log #192
+2026/06/30-09:41:35.281 1df8 Level-0 table #195: started
+2026/06/30-09:41:35.290 1df8 Level-0 table #195: 68698 bytes OK
+2026/06/30-09:41:35.296 1df8 Delete type=0 #192
+2026/06/30-09:44:35.498 5e64 Level-0 table #198: started
+2026/06/30-09:44:35.516 5e64 Level-0 table #198: 64404 bytes OK
+2026/06/30-09:44:35.519 5e64 Delete type=0 #196
+2026/06/30-09:46:35.503 5e64 Level-0 table #200: started
+2026/06/30-09:46:35.520 5e64 Level-0 table #200: 11865 bytes OK
+2026/06/30-09:46:35.523 5e64 Delete type=0 #197
+2026/06/30-09:46:35.523 5e64 Compacting 4@0 + 1@1 files
+2026/06/30-09:46:35.532 5e64 Generated table #201@0: 21 keys, 31434 bytes
+2026/06/30-09:46:35.532 5e64 Compacted 4@0 + 1@1 files => 31434 bytes
+2026/06/30-09:46:35.534 5e64 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/30-09:46:35.535 5e64 Delete type=2 #191
+2026/06/30-09:46:35.535 5e64 Delete type=2 #193
+2026/06/30-09:46:35.535 5e64 Delete type=2 #195
+2026/06/30-09:46:35.535 5e64 Delete type=2 #198
+2026/06/30-09:46:35.535 5e64 Delete type=2 #200
+2026/06/30-09:49:35.523 5e64 Level-0 table #203: started
+2026/06/30-09:49:35.531 5e64 Level-0 table #203: 38345 bytes OK
+2026/06/30-09:49:35.534 5e64 Delete type=0 #199
+2026/06/30-09:51:35.516 5e64 Level-0 table #205: started
+2026/06/30-09:51:35.523 5e64 Level-0 table #205: 13699 bytes OK
+2026/06/30-09:51:35.526 5e64 Delete type=0 #202
+2026/06/30-09:53:35.523 5e64 Level-0 table #207: started
+2026/06/30-09:53:35.530 5e64 Level-0 table #207: 44426 bytes OK
+2026/06/30-09:53:35.533 5e64 Delete type=0 #204
+2026/06/30-09:54:35.531 5e64 Level-0 table #209: started
+2026/06/30-09:54:35.551 5e64 Level-0 table #209: 37643 bytes OK
+2026/06/30-09:54:35.555 5e64 Delete type=0 #206
+2026/06/30-09:54:35.555 5e64 Compacting 4@0 + 1@1 files
+2026/06/30-09:54:35.562 5e64 Generated table #210@0: 21 keys, 59621 bytes
+2026/06/30-09:54:35.562 5e64 Compacted 4@0 + 1@1 files => 59621 bytes
+2026/06/30-09:54:35.564 5e64 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/30-09:54:35.565 5e64 Delete type=2 #201
+2026/06/30-09:54:35.565 5e64 Delete type=2 #203
+2026/06/30-09:54:35.565 5e64 Delete type=2 #205
+2026/06/30-09:54:35.565 5e64 Delete type=2 #207
+2026/06/30-09:54:35.565 5e64 Delete type=2 #209
+2026/06/30-09:56:35.535 5e64 Level-0 table #212: started
+2026/06/30-09:56:35.554 5e64 Level-0 table #212: 13622 bytes OK
+2026/06/30-09:56:35.557 5e64 Delete type=0 #208
+2026/06/30-10:00:35.547 5e64 Level-0 table #214: started
+2026/06/30-10:00:35.565 5e64 Level-0 table #214: 13255 bytes OK
+2026/06/30-10:00:35.568 5e64 Delete type=0 #211
+2026/06/30-10:01:35.540 5e64 Level-0 table #216: started
+2026/06/30-10:01:35.558 5e64 Level-0 table #216: 11072 bytes OK
+2026/06/30-10:01:35.561 5e64 Delete type=0 #213
+2026/06/30-10:03:26.939 5e64 Level-0 table #218: started
+2026/06/30-10:03:26.957 5e64 Level-0 table #218: 39975 bytes OK
+2026/06/30-10:03:26.960 5e64 Delete type=0 #215
+2026/06/30-10:03:26.960 5e64 Compacting 4@0 + 1@1 files
+2026/06/30-10:03:26.968 5e64 Generated table #219@0: 36 keys, 57738 bytes
+2026/06/30-10:03:26.968 5e64 Compacted 4@0 + 1@1 files => 57738 bytes
+2026/06/30-10:03:26.970 5e64 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/30-10:03:26.970 5e64 Delete type=2 #210
+2026/06/30-10:03:26.971 5e64 Delete type=2 #212
+2026/06/30-10:03:26.971 5e64 Delete type=2 #214
+2026/06/30-10:03:26.971 5e64 Delete type=2 #216
+2026/06/30-10:03:26.971 5e64 Delete type=2 #218
+2026/06/30-10:05:26.941 5e64 Level-0 table #221: started
+2026/06/30-10:05:26.959 5e64 Level-0 table #221: 26348 bytes OK
+2026/06/30-10:05:26.962 5e64 Delete type=0 #217
+2026/06/30-10:09:26.955 5e64 Level-0 table #223: started
+2026/06/30-10:09:26.967 5e64 Level-0 table #223: 19236 bytes OK
+2026/06/30-10:09:26.971 5e64 Delete type=0 #220
+2026/06/30-10:11:26.959 5e64 Level-0 table #225: started
+2026/06/30-10:11:26.966 5e64 Level-0 table #225: 31342 bytes OK
+2026/06/30-10:11:26.969 5e64 Delete type=0 #222
+2026/06/30-10:13:26.955 5e64 Level-0 table #227: started
+2026/06/30-10:13:26.961 5e64 Level-0 table #227: 13825 bytes OK
+2026/06/30-10:13:26.965 5e64 Delete type=0 #224
+2026/06/30-10:13:26.965 5e64 Compacting 4@0 + 1@1 files
+2026/06/30-10:13:26.973 5e64 Generated table #228@0: 39 keys, 57009 bytes
+2026/06/30-10:13:26.974 5e64 Compacted 4@0 + 1@1 files => 57009 bytes
+2026/06/30-10:13:26.976 5e64 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/06/30-10:13:26.977 5e64 Delete type=2 #219
+2026/06/30-10:13:26.977 5e64 Delete type=2 #221
+2026/06/30-10:13:26.977 5e64 Delete type=2 #223
+2026/06/30-10:13:26.977 5e64 Delete type=2 #225
+2026/06/30-10:13:26.977 5e64 Delete type=2 #227

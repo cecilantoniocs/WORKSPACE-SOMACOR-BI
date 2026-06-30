@@ -1,3 +1,7 @@
-2026/06/23-15:44:49.485 62b8 Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\IndexedDB\https_app.powerbi.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/06/23-15:44:49.486 62b8 Recovering log #3
-2026/06/23-15:44:49.486 62b8 Reusing old log c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\IndexedDB\https_app.powerbi.com_0.indexeddb.leveldb/000003.log 
+2026/06/30-10:02:29.599 5624 Reusing MANIFEST c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\IndexedDB\https_app.powerbi.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/06/30-10:02:29.599 5624 Recovering log #3
+2026/06/30-10:02:29.599 5624 Reusing old log c:\WORKSPACE SOMACOR\proyectos\exportar_co_semanales\datos\sesion_browser\Default\IndexedDB\https_app.powerbi.com_0.indexeddb.leveldb/000003.log 
+2026/06/30-10:11:38.382 7280 Level-0 table #5: started
+2026/06/30-10:11:38.394 7280 Level-0 table #5: 859 bytes OK
+2026/06/30-10:11:38.399 7280 Delete type=0 #3
+2026/06/30-10:11:38.399 7280 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
